@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://c3100i7dvfug7"]
+[gd_scene load_steps=2 format=3 uid="uid://c3100i7dvfug7"]
 
-[node name="Node3D" type="Node3D"]
+[ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_yjpkm")]
+position = Vector2(538, 578)
