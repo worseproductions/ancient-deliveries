@@ -1,8 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3100i7dvfug7"]
+[gd_scene load_steps=5 format=3 uid="uid://c3100i7dvfug7"]
 
+[ext_resource type="PackedScene" uid="uid://0yakmqtewvx5" path="res://scenes/blueprints/road.tscn" id="1_xfi2u"]
 [ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
+[ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="4_eb31o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_43wdi"]
+font = ExtResource("4_eb31o")
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+color = Color(0, 0.509804, 0.188235, 1)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+
+[node name="Road" parent="." instance=ExtResource("1_xfi2u")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+
+[node name="Label" type="Label" parent="."]
+offset_top = -176.0
+offset_right = 416.0
+offset_bottom = -153.0
+text = "asdfasdfasdfasddfdasfdasf"
+label_settings = SubResource("LabelSettings_43wdi")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(296, 128, 152, 648, 0, 648, 0, 0, 1152, 0, 1152, 648, 1000, 648, 856, 128)
+
 [node name="Player" parent="." instance=ExtResource("1_yjpkm")]
-position = Vector2(538, 578)
+position = Vector2(576, 560)

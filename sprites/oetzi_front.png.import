@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8xqmdjamltxt"
-path="res://.godot/imported/oetz.jpg-09cc8af2496bcbcff43bf667d64175e2.ctex"
+uid="uid://dkaok1fe27hvf"
+path="res://.godot/imported/oetzi_front.png-cc39de70362ae0834833051af515b38e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/oetz.jpg"
-dest_files=["res://.godot/imported/oetz.jpg-09cc8af2496bcbcff43bf667d64175e2.ctex"]
+source_file="res://sprites/oetzi_front.png"
+dest_files=["res://.godot/imported/oetzi_front.png-cc39de70362ae0834833051af515b38e.ctex"]
 
 [params]
 
