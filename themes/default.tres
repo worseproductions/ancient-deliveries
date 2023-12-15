@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d3s5oto438qbc"]
+
+[ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_a2bup"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qpmxi"]
+bg_color = Color(0, 1, 1, 1)
+
+[resource]
+Button/styles/normal = SubResource("StyleBoxFlat_qpmxi")
+Fonts/fonts/large = ExtResource("1_a2bup")
+Fonts/fonts/normal = ExtResource("1_a2bup")
