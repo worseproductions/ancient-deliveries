@@ -1,18 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://dw1vlj88g6cj3"]
+[gd_scene load_steps=3 format=3 uid="uid://bfc40trkthvl8"]
 
-[ext_resource type="Script" path="res://scripts/SelectionScript.cs" id="1_f7ciy"]
-[ext_resource type="PackedScene" uid="uid://cnucy0775rhr0" path="res://scenes/blueprints/selectable-option.tscn" id="2_55cdr"]
+[ext_resource type="Script" path="res://scripts/DecisionScreen.cs" id="1_0rcna"]
+[ext_resource type="PackedScene" uid="uid://bpcwhmwqh7dv6" path="res://scenes/blueprints/selectable-option.tscn" id="2_55cdr"]
 
-[node name="selector-screen" type="Control" node_paths=PackedStringArray("node")]
+[node name="DecisionScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_f7ciy")
-sceneToInstantiate = ExtResource("2_55cdr")
-node = NodePath("HFlowContainer")
+script = ExtResource("1_0rcna")
 
 [node name="HFlowContainer" type="HFlowContainer" parent="."]
 layout_mode = 1
@@ -23,3 +21,12 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
+
+[node name="LeftOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
+layout_mode = 2
+
+[node name="StraightOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
+layout_mode = 2
+
+[node name="RightOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
+layout_mode = 2

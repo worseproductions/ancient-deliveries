@@ -1,12 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnucy0775rhr0"]
+[gd_scene load_steps=4 format=3 uid="uid://bpcwhmwqh7dv6"]
 
-[ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="1_kl553"]
+[ext_resource type="Script" path="res://scripts/SelectableOption.cs" id="1_8ieac"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="1_x72el"]
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="2_fw7e8"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_svodh"]
-font = ExtResource("2_fw7e8")
-font_size = 46
 
 [node name="Selectable-option" type="Control"]
 custom_minimum_size = Vector2(270, 270)
@@ -24,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_8ieac")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -43,6 +40,7 @@ scale = Vector2(0.115, 0.115)
 texture = ExtResource("1_x72el")
 
 [node name="Button" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,21 +50,8 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme_type_variation = &"FlatButton"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_fw7e8")
+theme_override_font_sizes/font_size = 46
+text = "44444"
 flat = true
-
-[node name="RichTextLabel" type="Label" parent="Button"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 16.0
-offset_bottom = -59.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_kl553")
-label_settings = SubResource("LabelSettings_svodh")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 1
-max_lines_visible = 4
-visible_characters = 20

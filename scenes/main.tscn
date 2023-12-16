@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cs0nxa4i42137"]
+[gd_scene load_steps=29 format=3 uid="uid://cs0nxa4i42137"]
 
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
@@ -7,11 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://bkqrcq2jg63gl" path="res://scenes/blueprints/truck.tscn" id="3_k5w8g"]
 [ext_resource type="Script" path="res://scripts/Road.cs" id="3_rd2n0"]
 [ext_resource type="PackedScene" uid="uid://qwiucfpg8ar7" path="res://scenes/blueprints/cross_roads.tscn" id="4_ihku2"]
+[ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="5_egjwb"]
 [ext_resource type="Texture2D" uid="uid://b3y3e4jfi40vm" path="res://sprites/road_section.png" id="5_trgkd"]
 [ext_resource type="Texture2D" uid="uid://1myu4mu1nnvw" path="res://addons/AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="6_heowg"]
 [ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
-[ext_resource type="Script" path="res://scripts/FadeIn.cs" id="8_vo0te"]
+[ext_resource type="Script" path="res://scripts/Fader.cs" id="10_c5l3t"]
 [ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="10_hw3ju"]
+[ext_resource type="PackedScene" uid="uid://bfc40trkthvl8" path="res://scenes/selector-screen.tscn" id="13_yi3tu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
 albedo_texture = ExtResource("5_trgkd")
@@ -113,12 +115,13 @@ light_energy = 2.0
 light_angular_distance = 5.0
 
 [node name="Camera" type="Camera3D" parent="LightingAndCam"]
-transform = Transform3D(1, -8.73115e-10, 4.07454e-10, 8.83791e-10, 0.965926, 0.258819, -4.65661e-10, -0.258819, 0.965926, -2.32831e-08, 4.121, 5.88721)
+transform = Transform3D(1, 3.92902e-09, 1.10595e-09, 8.83791e-10, 0.965926, 0.258819, -5.23869e-10, -0.258819, 0.965925, 0.000879746, 4.12101, 4.88721)
 fov = 58.0
 size = 0.05
 
 [node name="Player" parent="." instance=ExtResource("1_yjpkm")]
 unique_name_in_owner = true
+transform = Transform3D(1, -1.85171e-10, 0, 1.85298e-10, 1, 0, 0, -4.54747e-13, 1, 0.000879771, 5.76825e-06, -0.999999)
 _speed = 10.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
@@ -143,7 +146,7 @@ transform = Transform3D(1, -6.87574e-11, -5.82077e-11, 6.88809e-11, 1, 0, -5.820
 curve = SubResource("Curve3D_gyapk")
 
 [node name="Obstacle" parent="ObstaclePaths/LeftObstaclePath" instance=ExtResource("8_twcpv")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.5667)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.567)
 progress = 52.2361
 
 [node name="RightObstaclePath" type="Path3D" parent="ObstaclePaths"]
@@ -190,7 +193,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("8_vo0te")
+script = ExtResource("10_c5l3t")
 
 [node name="ColorRect" type="ColorRect" parent="UiLayer/GameOverMenu"]
 layout_mode = 1
@@ -236,34 +239,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="DecisionScreen" parent="UiLayer" instance=ExtResource("13_yi3tu")]
+process_mode = 2
+visible = false
+
 [node name="GameUI" type="Control" parent="UiLayer"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 
+[node name="TextureRect" type="TextureRect" parent="UiLayer/GameUI"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 272.0
+offset_bottom = 88.0
+texture = ExtResource("5_egjwb")
+expand_mode = 1
+metadata/_edit_group_ = true
+
 [node name="HealthLabel" type="Label" parent="UiLayer/GameUI"]
 layout_mode = 0
-offset_right = 216.0
-offset_bottom = 96.0
+offset_left = 32.0
+offset_top = 16.0
+offset_right = 248.0
+offset_bottom = 112.0
 label_settings = SubResource("LabelSettings_yqome")
-
-[node name="SelectionScreen" type="Control" parent="UiLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("8_vo0te")
-
-[node name="ColorRect" type="ColorRect" parent="UiLayer/SelectionScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1197.69, -9.21823e-11, -1.07288e-06, 1.42879e-06, 0.903219, 9.31323e-10, -1.19209e-07, 1.36424e-12, 1201.79, 0, -0.002, 0)
@@ -271,7 +273,7 @@ mesh = SubResource("PlaneMesh_q7e3x")
 
 [node name="CrossRoadsTargetPoint" type="Marker3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, -1.46574e-09, -7.567e-10, 1.46587e-09, 1, 2.27374e-12, -7.567e-10, -4.09273e-12, 1, 9.91316, 0.27704, -7)
+transform = Transform3D(1, -1.9314e-09, -7.567e-10, 1.93153e-09, 1, 4.09273e-12, -7.567e-10, -4.54747e-12, 1, 9.9202, 0.277086, -15)
 gizmo_extents = 1.71
 
 [node name="CrossRoadsSpawnPoint" type="Marker3D" parent="."]

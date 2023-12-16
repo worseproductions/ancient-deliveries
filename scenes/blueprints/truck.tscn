@@ -4,5 +4,5 @@
 
 [node name="Obstacle" instance=ExtResource("1_7ib3f")]
 
-[node name="Sprite3D" parent="StaticBody3D" index="1"]
+[node name="Sprite3D" parent="Area3D" index="1"]
 modulate = Color(0, 1, 1, 1)

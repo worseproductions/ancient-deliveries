@@ -19,7 +19,7 @@ public partial class CrossRoads : Node3D {
 		var pos = GlobalPosition;
 		var targetPos = _targetPoint.GlobalPosition;
 		var distance = pos.DistanceTo(targetPos);
-		if (distance < 0.1f) {
+		if (distance < 0.5f) {
 			GD.Print("Target reached!");
 			EmitSignal(SignalName.TargetReached);
 		};
