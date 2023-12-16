@@ -1,12 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://dolw3rxmrf8pf"]
+[gd_scene load_steps=14 format=3 uid="uid://dolw3rxmrf8pf"]
 
 [ext_resource type="Texture2D" uid="uid://cpo7jmcgsayc7" path="res://sprites/TitleAncientDeliveries.png" id="1_2qbhe"]
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="1_bi8iq"]
 [ext_resource type="Script" path="res://scripts/MenuHandler.cs" id="1_de1fd"]
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="2_kbt28"]
+[ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="3_8rmri"]
 [ext_resource type="Texture2D" uid="uid://cbyfnk24f28d8" path="res://sprites/Oetzivorne_1.png" id="5_wx21f"]
 [ext_resource type="Texture2D" uid="uid://b7u7v34kpodf7" path="res://sprites/WorseLogoBanner.png" id="6_gv7bt"]
 [ext_resource type="Script" path="res://scripts/LinkCaller.cs" id="7_hdlqg"]
+[ext_resource type="Texture2D" uid="uid://d1tpf0ia6dtcj" path="res://sprites/menu_bg.png" id="9_3mjwl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k0lqi"]
 
@@ -30,6 +32,19 @@ otherScenePath = "res://scenes/main.tscn"
 startButton = NodePath("Options/VFlowContainer/Start")
 otherButton = NodePath("Options/VFlowContainer/Options")
 
+[node name="bg" type="TextureRect" parent="."]
+z_index = -2
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_3mjwl")
+expand_mode = 1
+stretch_mode = 1
+
 [node name="Title" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 10
@@ -46,10 +61,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 64.0
-offset_right = -606.0
-offset_bottom = 24.0
+offset_left = -8.0
+offset_top = 96.0
+offset_right = -622.0
+offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.200713
@@ -64,9 +79,8 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = -352.0
+offset_top = -328.0
 offset_right = -624.0
-offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_wjqsp")
@@ -89,15 +103,31 @@ layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_bi8iq")
 theme_type_variation = &"FlatButton"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_kbt28")
 theme_override_font_sizes/font_size = 100
 theme_override_styles/normal = SubResource("StyleBoxEmpty_u8bjq")
 text = "qc"
 flat = true
 
+[node name="TextureRect" type="TextureRect" parent="Options/VFlowContainer/Start"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 4.0
+offset_right = 136.0
+offset_bottom = 167.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = ExtResource("3_8rmri")
+expand_mode = 4
+
 [node name="MarginContainer" type="MarginContainer" parent="Options/VFlowContainer"]
-custom_minimum_size = Vector2(0, 38.685)
+custom_minimum_size = Vector2(0, 15.77)
 layout_mode = 2
 
 [node name="Options" type="Button" parent="Options/VFlowContainer"]
@@ -105,12 +135,28 @@ layout_mode = 2
 focus_mode = 0
 theme = ExtResource("1_bi8iq")
 theme_type_variation = &"FlatButton"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_kbt28")
 theme_override_font_sizes/font_size = 100
 theme_override_styles/normal = SubResource("StyleBoxEmpty_pmm7e")
 text = "fge"
 flat = true
+
+[node name="TextureRect2" type="TextureRect" parent="Options/VFlowContainer/Options"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 9.0
+offset_right = 145.0
+offset_bottom = 172.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = ExtResource("3_8rmri")
+expand_mode = 4
 
 [node name="oetzi" type="TextureRect" parent="."]
 layout_mode = 0
@@ -120,12 +166,29 @@ offset_right = 1227.0
 offset_bottom = 654.0
 texture = ExtResource("5_wx21f")
 
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1125.0
+offset_top = 24.0
+offset_right = 104.0
+offset_bottom = -193.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+texture = ExtResource("3_8rmri")
+expand_mode = 1
+flip_v = true
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 881.0
-offset_top = 8.0
-offset_right = 1201.0
-offset_bottom = 80.0
+offset_left = 840.0
+offset_top = 40.0
+offset_right = 1089.0
+offset_bottom = 120.0
 texture = ExtResource("6_gv7bt")
 expand_mode = 1
 
@@ -134,8 +197,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -65.0
-offset_right = -73.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -145,10 +207,11 @@ script = ExtResource("7_hdlqg")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 816.0
-offset_top = 8.0
-offset_right = 936.0
-offset_bottom = 68.0
+offset_left = 712.0
+offset_top = 40.0
+offset_right = 832.0
+offset_bottom = 123.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_kbt28")
 theme_override_font_sizes/font_size = 60
 text = "Mc"
