@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
 [ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="2_6l6j8"]
 [ext_resource type="PackedScene" uid="uid://c8jg2fy85n1nq" path="res://scenes/blueprints/car.tscn" id="3_8aaa5"]
-[ext_resource type="PackedScene" uid="uid://bkqrcq2jg63gl" path="res://scenes/blueprints/truck.tscn" id="3_k5w8g"]
+[ext_resource type="PackedScene" path="res://scenes/blueprints/truck.tscn" id="3_k5w8g"]
 [ext_resource type="Script" path="res://scripts/Road.cs" id="3_rd2n0"]
-[ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
+[ext_resource type="PackedScene" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
 [ext_resource type="Script" path="res://scripts/FadeIn.cs" id="8_vo0te"]
 [ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="10_hw3ju"]
 
@@ -107,7 +107,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12032, 0, 4.56675)
 curve = SubResource("Curve3D_ca7g5")
 
 [node name="Obstacle" parent="ObstaclePaths/LeftObstaclePath" instance=ExtResource("8_twcpv")]
-transform = Transform3D(-1, -3.01588e-10, -8.72533e-08, -3.02216e-10, 1, -4.54747e-13, 8.76025e-08, -9.09495e-13, -1, 0.120319, 1, -51.5667)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.567)
 progress = 52.2361
 
 [node name="RightObstaclePath" type="Path3D" parent="ObstaclePaths"]
@@ -137,7 +137,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87968, 0, 4.56675)
 curve = SubResource("Curve3D_ca7g5")
 
 [node name="Obstacle" parent="ObstaclePathsRight/RightObstaclePath" instance=ExtResource("8_twcpv")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.5667)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.567)
 progress = 52.2361
 _speed = -0.25
 _loops = true

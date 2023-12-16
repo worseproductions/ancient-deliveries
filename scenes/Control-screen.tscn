@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1j8jiio7bwt1"]
+
+[ext_resource type="Script" path="res://scripts/WaitForKeyPress.cs" id="1_ahgyf"]
+[ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="1_mf7oi"]
+[ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="2_tcqc6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sjlxg"]
+texture = ExtResource("1_mf7oi")
+region_rect = Rect2(9.50644, 70.0484, 50.1206, 57.9516)
+modulate_color = Color(0.596078, 0.596078, 0.596078, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls0uk"]
+texture = ExtResource("2_tcqc6")
+
+[node name="Control-screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ahgyf")
+scenePathToSwitch = "res://scenes/main.tscn"
+
+[node name="bg" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_sjlxg")
+
+[node name="paper" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ls0uk")
