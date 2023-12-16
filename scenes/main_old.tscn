@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3100i7dvfug7"]
+[gd_scene load_steps=6 format=3 uid="uid://b2kxhiapwx80y"]
 
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="PackedScene" uid="uid://0yakmqtewvx5" path="res://scenes/blueprints/road.tscn" id="1_xfi2u"]
@@ -47,9 +47,7 @@ position = Vector2(576, 324)
 polygon = PackedVector2Array(296, 128, 152, 648, 0, 648, 0, 0, 1152, 0, 1152, 648, 1000, 648, 856, 128)
 
 [node name="Car" parent="." instance=ExtResource("3_8aaa5")]
-position = Vector2(440, 656)
-_minScale = Vector2(1, 1)
-_maxScale = Vector2(2.5, 2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 440, 656, 0)
 
 [node name="Player" parent="." instance=ExtResource("1_yjpkm")]
-position = Vector2(576, 560)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 576, 560, 0)
