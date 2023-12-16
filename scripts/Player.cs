@@ -6,6 +6,8 @@ public partial class Player : CharacterBody3D {
 	[Export] private float _speed = 300.0f;
 	[Export] private int _health = 3;
 	
+	[Signal] public delegate void DiedEventHandler();
+	
 	public override void _PhysicsProcess(double delta) {
 		var velocity = Velocity;
 
@@ -26,8 +28,9 @@ public partial class Player : CharacterBody3D {
 	public void TakeDamage() {
 		_health--;
 		GD.Print($"Health: {_health}");
-		if (_health <= 0) {
-			// game over
-		}
- 	}
+		if (_health > 0) return;
+		GD.Print("Game Over");
+		GetTree().Paused = true;
+		EmitSignal(SignalName.Died);
+	}
 }

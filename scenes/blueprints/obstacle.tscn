@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://46qlm3geacag"]
+
+[ext_resource type="Texture2D" uid="uid://dkua56w1a1fx1" path="res://sprites/car.png" id="1_2n6gd"]
+[ext_resource type="Script" path="res://scripts/Obstacle.cs" id="1_ldim2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oj1q2"]
+size = Vector3(3, 1, 1)
+
+[node name="Obstacle" type="PathFollow3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.227631, 1, -6.15233)
+progress = 7.0
+script = ExtResource("1_ldim2")
+_speed = 0.5
+EnableLights = true
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.150445, 0)
+shape = SubResource("BoxShape3D_oj1q2")
+
+[node name="Sprite3D" type="Sprite3D" parent="Area3D"]
+transform = Transform3D(0.544267, 0, 0, 0, 0.31055, -0.0821239, 0, 0.446973, 0.0570584, 0, 0.779254, -0.988458)
+texture = ExtResource("1_2n6gd")
+region_enabled = true
+region_rect = Rect2(358.272, 253.627, 588.613, 748.108)
+
+[node name="Lights" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258416, 0.126864, -2.47147)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05481, 0.0693724, 0)
+light_energy = 16.0
+light_size = 100.0
+spot_range = 4096.0
+spot_angle = 7.32717
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05361, 0.0693724, 0)
+light_energy = 16.0
+light_size = 100.0
+spot_range = 4096.0
+spot_angle = 7.32717
