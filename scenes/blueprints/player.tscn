@@ -5,26 +5,32 @@
 [ext_resource type="Texture2D" uid="uid://c08umln64ru74" path="res://sprites/oetzi.png" id="3_42e5q"]
 [ext_resource type="Texture2D" uid="uid://cw2gmh1vgldf0" path="res://sprites/cart_back.png" id="4_qm67w"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_87lbf"]
-size = Vector2(126, 140)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbspv"]
+radius = 0.689408
+height = 2.45616
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_b1wj1")
+_speed = 5.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_87lbf")
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-position = Vector2(11.3, 0.5)
-scale = Vector2(0.1, 0.1)
+[node name="Paper" type="Sprite3D" parent="."]
+transform = Transform3D(0.144, 0, 0, 0, 0.219, 0, 0, 0, 1, 0.295383, 1.11316, 0)
+sorting_offset = -1.0
+billboard = 2
 texture = ExtResource("2_g0ufd")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-5.7, 0.5)
-scale = Vector2(0.1, 0.1)
+[node name="Oetzi" type="Sprite3D" parent="."]
+transform = Transform3D(0.164035, 0, 0, 0, 0.164035, 0, 0, 0, 1, 0.12, 1.243, 0)
+billboard = 2
 texture = ExtResource("3_42e5q")
 
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-position = Vector2(31, 53)
-scale = Vector2(0.1, 0.1)
+[node name="CartBack" type="Sprite3D" parent="."]
+transform = Transform3D(0.164035, 0, 0, 0, 0.164035, 0, 0, 0, 1, 0.12, 1.243, 0)
+sorting_offset = 1.0
+offset = Vector2(365.945, -520.08)
+billboard = 2
 texture = ExtResource("4_qm67w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061903, 1.22368, 0.000297308)
+shape = SubResource("CapsuleShape3D_dbspv")

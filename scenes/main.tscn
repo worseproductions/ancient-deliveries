@@ -1,17 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://cs0nxa4i42137"]
+[gd_scene load_steps=20 format=3 uid="uid://cs0nxa4i42137"]
 
-[ext_resource type="Texture2D" uid="uid://c08umln64ru74" path="res://sprites/oetzi.png" id="1_amhfo"]
+[ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
+[ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
 [ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="2_6l6j8"]
+[ext_resource type="PackedScene" uid="uid://c8jg2fy85n1nq" path="res://scenes/blueprints/car.tscn" id="3_8aaa5"]
+[ext_resource type="PackedScene" uid="uid://bkqrcq2jg63gl" path="res://scenes/blueprints/truck.tscn" id="3_k5w8g"]
 [ext_resource type="Script" path="res://scripts/Road.cs" id="3_rd2n0"]
-[ext_resource type="Script" path="res://scripts/Player.cs" id="4_rom6x"]
-[ext_resource type="Texture2D" uid="uid://cw2gmh1vgldf0" path="res://sprites/cart_back.png" id="5_igax0"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emofj"]
-albedo_color = Color(0, 0.341176, 0.054902, 1)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_bjy8t"]
-material = SubResource("StandardMaterial3D_emofj")
+[ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
+[ext_resource type="Script" path="res://scripts/FadeIn.cs" id="8_vo0te"]
+[ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="10_hw3ju"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
 albedo_texture = ExtResource("2_6l6j8")
@@ -22,12 +20,10 @@ texture_filter = 0
 material = SubResource("StandardMaterial3D_j3mcs")
 size = Vector2(10, 100)
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_vj5c5"]
-turbidity = 0.0
-ground_color = Color(0.101961, 0.0705882, 0.0352941, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_luwgd"]
 
 [sub_resource type="Sky" id="Sky_maxvm"]
-sky_material = SubResource("PhysicalSkyMaterial_vj5c5")
+sky_material = SubResource("ProceduralSkyMaterial_luwgd")
 
 [sub_resource type="Environment" id="Environment_w17sc"]
 background_mode = 2
@@ -36,21 +32,28 @@ ambient_light_source = 3
 fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
 volumetric_fog_density = 0.0647
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_avvhk"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbspv"]
-radius = 0.689408
-height = 2.45616
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_3hrkw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mt3au"]
 size = Vector3(1, 5.2124, 9.43631)
 
-[node name="Test" type="Node3D"]
-script = ExtResource("1_q4brq")
+[sub_resource type="Curve3D" id="Curve3D_ca7g5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.120319, 0, -103.567, 0, 0, 0, 0, 0, 0, 0.120319, 1, -101.567, 0, 0, 0, 0, 0, 0, 0.120319, 1, -1.56675, 0, 0, 0, 0, 0, 0, 0.120319, 0, 0.433249),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
-[node name="Ground" type="MeshInstance3D" parent="."]
-transform = Transform3D(37.1849, 0, 0, 0, 1, 0, 0, 0, 29.6948, 0, 0, 0)
-mesh = SubResource("PlaneMesh_bjy8t")
+[sub_resource type="LabelSettings" id="LabelSettings_s75j3"]
+font = ExtResource("1_5rb0j")
+font_size = 64
+font_color = Color(0.333333, 0.309804, 0.329412, 1)
+
+[node name="Test" type="Node3D"]
+transform = Transform3D(0.999999, -0.00146681, 0.000879762, 0.0014668, 0.999999, 7.0587e-06, -0.000879771, -5.74413e-06, 1, 0, 0, 0)
+script = ExtResource("1_q4brq")
+_spawnMultiplier = 0.5
+_obstacleScenes = Array[PackedScene]([ExtResource("3_8aaa5"), ExtResource("3_k5w8g")])
 
 [node name="Road" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
@@ -58,39 +61,29 @@ transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0.104
 mesh = SubResource("PlaneMesh_rk3en")
 script = ExtResource("3_rd2n0")
 
+[node name="Road2" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 19, 0.104, -47.395)
+mesh = SubResource("PlaneMesh_rk3en")
+script = ExtResource("3_rd2n0")
+
 [node name="LightingAndCam" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="LightingAndCam"]
 environment = SubResource("Environment_w17sc")
-camera_attributes = SubResource("CameraAttributesPractical_avvhk")
+camera_attributes = SubResource("CameraAttributesPhysical_3hrkw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="LightingAndCam"]
-transform = Transform3D(0.99401, 0.106141, -0.0260421, 0.0223457, 0.0358682, 0.999107, 0.10698, -0.993704, 0.0332816, 0, 20.0669, 0)
+transform = Transform3D(0.993886, 0.106738, -0.028233, -0.10408, 0.991099, 0.0830037, 0.0368413, -0.0795578, 0.996149, 8.25381e-10, 20.0669, 2.91038e-11)
 
 [node name="Camera" type="Camera3D" parent="LightingAndCam"]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 4.121, 5.88721)
-fov = 45.0
+transform = Transform3D(1, -8.73115e-10, 4.07454e-10, 8.83791e-10, 0.965926, 0.258819, -4.65661e-10, -0.258819, 0.965926, -2.32831e-08, 4.121, 5.88721)
+fov = 58.0
+size = 0.05
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" parent="." instance=ExtResource("1_yjpkm")]
 unique_name_in_owner = true
-script = ExtResource("4_rom6x")
-_speed = 5.0
-
-[node name="Oetzi" type="Sprite3D" parent="Player"]
-transform = Transform3D(0.164035, 0, 0, 0, 0.164035, 0, 0, 0, 1, 0.12, 1.243, 0)
-billboard = 2
-texture = ExtResource("1_amhfo")
-
-[node name="CartBack" type="Sprite3D" parent="Player"]
-transform = Transform3D(0.164035, 0, 0, 0, 0.164035, 0, 0, 0, 1, 0.12, 1.243, 0)
-sorting_offset = 1.0
-offset = Vector2(365.945, -520.08)
-billboard = 2
-texture = ExtResource("5_igax0")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061903, 1.22368, 0.000297308)
-shape = SubResource("CapsuleShape3D_dbspv")
+_speed = 10.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.40268, 0, 0)
@@ -105,3 +98,100 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33232, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56472, 1.90259, -0.396673)
 shape = SubResource("BoxShape3D_mt3au")
+
+[node name="ObstaclePaths" type="Node3D" parent="."]
+
+[node name="LeftObstaclePath" type="Path3D" parent="ObstaclePaths"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12032, 0, 4.56675)
+curve = SubResource("Curve3D_ca7g5")
+
+[node name="Obstacle" parent="ObstaclePaths/LeftObstaclePath" instance=ExtResource("8_twcpv")]
+transform = Transform3D(-1, -3.01588e-10, -8.72533e-08, -3.02216e-10, 1, -4.54747e-13, 8.76025e-08, -9.09495e-13, -1, 0.120319, 1, -51.5667)
+progress = 52.2361
+
+[node name="RightObstaclePath" type="Path3D" parent="ObstaclePaths"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87968, 0, 4.56675)
+curve = SubResource("Curve3D_ca7g5")
+
+[node name="Obstacle" parent="ObstaclePaths/RightObstaclePath" instance=ExtResource("8_twcpv")]
+transform = Transform3D(-1, -3.90967e-08, -7.81933e-08, 0, 0.894427, -0.447214, 8.74228e-08, -0.447214, -0.894427, 0.120319, 0, -103.567)
+progress = 0.0
+
+[node name="ObstaclePathsRight" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9917, 0, 0)
+
+[node name="LeftObstaclePath" type="Path3D" parent="ObstaclePathsRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12032, 0, 4.56675)
+curve = SubResource("Curve3D_ca7g5")
+
+[node name="Obstacle" parent="ObstaclePathsRight/LeftObstaclePath" instance=ExtResource("8_twcpv")]
+transform = Transform3D(-1, -3.90967e-08, -7.81933e-08, 0, 0.894427, -0.447214, 8.74228e-08, -0.447214, -0.894427, 0.120319, 0, -103.567)
+progress = 0.0
+_speed = -0.25
+_loops = true
+
+[node name="RightObstaclePath" type="Path3D" parent="ObstaclePathsRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87968, 0, 4.56675)
+curve = SubResource("Curve3D_ca7g5")
+
+[node name="Obstacle" parent="ObstaclePathsRight/RightObstaclePath" instance=ExtResource("8_twcpv")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.5667)
+progress = 52.2361
+_speed = -0.25
+_loops = true
+
+[node name="UiLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="GameOverMenu" type="Control" parent="UiLayer"]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("8_vo0te")
+
+[node name="ColorRect" type="ColorRect" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.509804, 0.509804, 0.509804, 1)
+
+[node name="Label" type="Label" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.5
+offset_top = -50.5
+offset_right = 40.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_s75j3")
+
+[node name="PauseMenu" type="Control" parent="UiLayer"]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 640.0
+script = ExtResource("10_hw3ju")
+_fadeDuration = 0.1
+
+[node name="ColorRect" type="ColorRect" parent="UiLayer/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
