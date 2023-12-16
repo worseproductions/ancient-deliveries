@@ -1,44 +1,107 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3100i7dvfug7"]
+[gd_scene load_steps=17 format=3 uid="uid://cs0nxa4i42137"]
 
-[ext_resource type="PackedScene" uid="uid://0yakmqtewvx5" path="res://scenes/blueprints/road.tscn" id="1_xfi2u"]
-[ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
-[ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="3_3tmfg"]
-[ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="4_eb31o"]
+[ext_resource type="Texture2D" uid="uid://c08umln64ru74" path="res://sprites/oetzi.png" id="1_amhfo"]
+[ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
+[ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="2_6l6j8"]
+[ext_resource type="Script" path="res://scripts/Road.cs" id="3_rd2n0"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="4_rom6x"]
+[ext_resource type="Texture2D" uid="uid://cw2gmh1vgldf0" path="res://sprites/cart_back.png" id="5_igax0"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_owhd0"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emofj"]
+albedo_color = Color(0, 0.341176, 0.054902, 1)
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_bjy8t"]
+material = SubResource("StandardMaterial3D_emofj")
 
-[node name="Polygon2D2" type="Polygon2D" parent="."]
-color = Color(0, 0.509804, 0.188235, 1)
-polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
+albedo_texture = ExtResource("2_6l6j8")
+uv1_scale = Vector3(1, 10, 1)
+texture_filter = 0
 
-[node name="Road" parent="." instance=ExtResource("1_xfi2u")]
+[sub_resource type="PlaneMesh" id="PlaneMesh_rk3en"]
+material = SubResource("StandardMaterial3D_j3mcs")
+size = Vector2(10, 100)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_vj5c5"]
+turbidity = 0.0
+ground_color = Color(0.101961, 0.0705882, 0.0352941, 1)
+
+[sub_resource type="Sky" id="Sky_maxvm"]
+sky_material = SubResource("PhysicalSkyMaterial_vj5c5")
+
+[sub_resource type="Environment" id="Environment_w17sc"]
+background_mode = 2
+sky = SubResource("Sky_maxvm")
+ambient_light_source = 3
+fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
+volumetric_fog_density = 0.0647
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_avvhk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbspv"]
+radius = 0.689408
+height = 2.45616
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mt3au"]
+size = Vector3(1, 5.2124, 9.43631)
+
+[node name="Test" type="Node3D"]
+script = ExtResource("1_q4brq")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(37.1849, 0, 0, 0, 1, 0, 0, 0, 29.6948, 0, 0, 0)
+mesh = SubResource("PlaneMesh_bjy8t")
+
+[node name="Road" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-position = Vector2(576, 324)
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0.104, -47.395)
+mesh = SubResource("PlaneMesh_rk3en")
+script = ExtResource("3_rd2n0")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="LightingAndCam" type="Node3D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(296, 128, 152, 648, 0, 648, 0, 0, 1152, 0, 1152, 648, 1000, 648, 856, 128)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="LightingAndCam"]
+environment = SubResource("Environment_w17sc")
+camera_attributes = SubResource("CameraAttributesPractical_avvhk")
 
-[node name="Player" parent="." instance=ExtResource("1_yjpkm")]
-position = Vector2(576, 560)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="LightingAndCam"]
+transform = Transform3D(0.99401, 0.106141, -0.0260421, 0.0223457, 0.0358682, 0.999107, 0.10698, -0.993704, 0.0332816, 0, 20.0669, 0)
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "asdfasdf"
-label_settings = SubResource("LabelSettings_owhd0")
+[node name="Camera" type="Camera3D" parent="LightingAndCam"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 4.121, 5.88721)
+fov = 45.0
 
-[node name="Button" type="Button" parent="."]
-offset_left = 8.0
-offset_top = -48.0
-offset_right = 168.0
-offset_bottom = -24.0
-theme = ExtResource("3_3tmfg")
-theme_override_colors/font_color = Color(0, 1, 1, 1)
-theme_override_fonts/font = ExtResource("4_eb31o")
-text = "asdfasdf"
+[node name="Player" type="CharacterBody3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_rom6x")
+_speed = 5.0
+
+[node name="Oetzi" type="Sprite3D" parent="Player"]
+transform = Transform3D(0.164035, 0, 0, 0, 0.164035, 0, 0, 0, 1, 0.12, 1.243, 0)
+billboard = 2
+texture = ExtResource("1_amhfo")
+
+[node name="CartBack" type="Sprite3D" parent="Player"]
+transform = Transform3D(0.164035, 0, 0, 0, 0.164035, 0, 0, 0, 1, 0.12, 1.243, 0)
+sorting_offset = 1.0
+offset = Vector2(365.945, -520.08)
+billboard = 2
+texture = ExtResource("5_igax0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061903, 1.22368, 0.000297308)
+shape = SubResource("CapsuleShape3D_dbspv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.40268, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56472, 1.90259, -0.396673)
+shape = SubResource("BoxShape3D_mt3au")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.33232, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56472, 1.90259, -0.396673)
+shape = SubResource("BoxShape3D_mt3au")

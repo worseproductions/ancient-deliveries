@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3100i7dvfug7"]
+
+[ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
+[ext_resource type="PackedScene" uid="uid://0yakmqtewvx5" path="res://scenes/blueprints/road.tscn" id="1_xfi2u"]
+[ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
+[ext_resource type="PackedScene" uid="uid://c8jg2fy85n1nq" path="res://scenes/blueprints/car.tscn" id="3_8aaa5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwnbs"]
+font = ExtResource("1_5rb0j")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.45098, 0.0431373, 1)
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -384.0
+offset_top = -184.0
+offset_right = -344.0
+offset_bottom = -161.0
+text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz"
+label_settings = SubResource("LabelSettings_bwnbs")
+
+[node name="Road" parent="." instance=ExtResource("1_xfi2u")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 324)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(296, 128, 152, 648, 0, 648, 0, 0, 1152, 0, 1152, 648, 1000, 648, 856, 128)
+
+[node name="Car" parent="." instance=ExtResource("3_8aaa5")]
+position = Vector2(440, 656)
+_minScale = Vector2(1, 1)
+_maxScale = Vector2(2.5, 2.5)
+
+[node name="Player" parent="." instance=ExtResource("1_yjpkm")]
+position = Vector2(576, 560)
