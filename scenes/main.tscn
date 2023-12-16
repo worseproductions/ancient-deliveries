@@ -1,18 +1,20 @@
-[gd_scene load_steps=20 format=3 uid="uid://cs0nxa4i42137"]
+[gd_scene load_steps=27 format=3 uid="uid://cs0nxa4i42137"]
 
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
 [ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
-[ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="2_6l6j8"]
 [ext_resource type="PackedScene" uid="uid://c8jg2fy85n1nq" path="res://scenes/blueprints/car.tscn" id="3_8aaa5"]
 [ext_resource type="PackedScene" uid="uid://bkqrcq2jg63gl" path="res://scenes/blueprints/truck.tscn" id="3_k5w8g"]
 [ext_resource type="Script" path="res://scripts/Road.cs" id="3_rd2n0"]
+[ext_resource type="PackedScene" uid="uid://qwiucfpg8ar7" path="res://scenes/blueprints/cross_roads.tscn" id="4_ihku2"]
+[ext_resource type="Texture2D" uid="uid://b3y3e4jfi40vm" path="res://sprites/road_section.png" id="5_trgkd"]
+[ext_resource type="Texture2D" uid="uid://1myu4mu1nnvw" path="res://addons/AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="6_heowg"]
 [ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
 [ext_resource type="Script" path="res://scripts/FadeIn.cs" id="8_vo0te"]
 [ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="10_hw3ju"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
-albedo_texture = ExtResource("2_6l6j8")
+albedo_texture = ExtResource("5_trgkd")
 uv1_scale = Vector3(1, 10, 1)
 texture_filter = 0
 
@@ -20,15 +22,17 @@ texture_filter = 0
 material = SubResource("StandardMaterial3D_j3mcs")
 size = Vector2(10, 100)
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_luwgd"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_58yhw"]
+panorama = ExtResource("6_heowg")
 
 [sub_resource type="Sky" id="Sky_maxvm"]
-sky_material = SubResource("ProceduralSkyMaterial_luwgd")
+sky_material = SubResource("PanoramaSkyMaterial_58yhw")
 
 [sub_resource type="Environment" id="Environment_w17sc"]
 background_mode = 2
 sky = SubResource("Sky_maxvm")
 ambient_light_source = 3
+ambient_light_color = Color(0, 0.45098, 1, 1)
 fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
 volumetric_fog_density = 0.0647
 
@@ -37,9 +41,23 @@ volumetric_fog_density = 0.0647
 [sub_resource type="BoxShape3D" id="BoxShape3D_mt3au"]
 size = Vector3(1, 5.2124, 9.43631)
 
-[sub_resource type="Curve3D" id="Curve3D_ca7g5"]
+[sub_resource type="Curve3D" id="Curve3D_gyapk"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.120319, 0, -103.567, 0, 0, 0, 0, 0, 0, 0.120319, 1, -101.567, 0, 0, 0, 0, 0, 0, 0.120319, 1, -1.56675, 0, 0, 0, 0, 0, 0, 0.120319, 0, 0.433249),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_rbbcv"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.120319, 0, -103.567, 0, 0, 0, 0, 0, 0, 0.120319, 1, -101.567, 0, 0, 0, 0, 0, 0, 0.120319, 1, -1.56675, 0, 0, 0, 0, 0, 0, 0.120319, 0, 0.433249),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_ca7g5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.120319, 0, 0.433249, 0, 0, 0, 0, 0, 0, 0.120319, 1, -1.56675, 0, 0, 0, 0, 0, 0, 0.120319, 1, -101.567, 0, 0, 0, 0, 0, 0, 0.120319, 0, -103.567),
 "tilts": PackedFloat32Array(0, 0, 0, 0)
 }
 point_count = 4
@@ -49,21 +67,36 @@ font = ExtResource("1_5rb0j")
 font_size = 64
 font_color = Color(0.333333, 0.309804, 0.329412, 1)
 
-[node name="Test" type="Node3D"]
+[sub_resource type="LabelSettings" id="LabelSettings_yqome"]
+font = ExtResource("1_5rb0j")
+font_size = 64
+font_color = Color(1, 0.427451, 0.580392, 1)
+shadow_color = Color(1, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m654t"]
+albedo_color = Color(0, 0.341176, 0.0392157, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_q7e3x"]
+material = SubResource("StandardMaterial3D_m654t")
+
+[node name="Test" type="Node3D" node_paths=PackedStringArray("_crossRoadsSpawnPoint")]
+process_priority = -1
 transform = Transform3D(0.999999, -0.00146681, 0.000879762, 0.0014668, 0.999999, 7.0587e-06, -0.000879771, -5.74413e-06, 1, 0, 0, 0)
 script = ExtResource("1_q4brq")
 _spawnMultiplier = 0.5
 _obstacleScenes = Array[PackedScene]([ExtResource("3_8aaa5"), ExtResource("3_k5w8g")])
+_crossRoadsScene = ExtResource("4_ihku2")
+_crossRoadsSpawnPoint = NodePath("CrossRoadsSpawnPoint")
 
 [node name="Road" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0.104, -47.395)
+transform = Transform3D(1, -1.85173e-10, -1.16415e-10, 1.85297e-10, 1, 0, -1.16415e-10, -4.54747e-13, 1, 0, 0.104, -49)
 mesh = SubResource("PlaneMesh_rk3en")
 script = ExtResource("3_rd2n0")
 
 [node name="Road2" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 19, 0.104, -47.395)
+transform = Transform3D(1, -4.18003e-10, -2.32831e-10, 4.18128e-10, 1, 4.54747e-13, -2.32831e-10, -9.09495e-13, 1, 20, 0.102533, -48.9991)
 mesh = SubResource("PlaneMesh_rk3en")
 script = ExtResource("3_rd2n0")
 
@@ -74,7 +107,10 @@ environment = SubResource("Environment_w17sc")
 camera_attributes = SubResource("CameraAttributesPhysical_3hrkw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="LightingAndCam"]
-transform = Transform3D(0.993886, 0.106738, -0.028233, -0.10408, 0.991099, 0.0830037, 0.0368413, -0.0795578, 0.996149, 8.25381e-10, 20.0669, 2.91038e-11)
+transform = Transform3D(0.994241, 0.103847, -0.0264636, 0.105914, -0.989832, 0.0949513, -0.016334, -0.0972073, -0.99513, 8.25388e-10, 20.0669, 7.27596e-11)
+light_color = Color(1, 1, 0.945098, 1)
+light_energy = 2.0
+light_angular_distance = 5.0
 
 [node name="Camera" type="Camera3D" parent="LightingAndCam"]
 transform = Transform3D(1, -8.73115e-10, 4.07454e-10, 8.83791e-10, 0.965926, 0.258819, -4.65661e-10, -0.258819, 0.965926, -2.32831e-08, 4.121, 5.88721)
@@ -103,17 +139,17 @@ shape = SubResource("BoxShape3D_mt3au")
 
 [node name="LeftObstaclePath" type="Path3D" parent="ObstaclePaths"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12032, 0, 4.56675)
-curve = SubResource("Curve3D_ca7g5")
+transform = Transform3D(1, -6.87574e-11, -5.82077e-11, 6.88809e-11, 1, 0, -5.82077e-11, 0, 1, -2.12032, 2.72848e-11, 4.56675)
+curve = SubResource("Curve3D_gyapk")
 
 [node name="Obstacle" parent="ObstaclePaths/LeftObstaclePath" instance=ExtResource("8_twcpv")]
-transform = Transform3D(-1, -3.01588e-10, -8.72533e-08, -3.02216e-10, 1, -4.54747e-13, 8.76025e-08, -9.09495e-13, -1, 0.120319, 1, -51.5667)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.5667)
 progress = 52.2361
 
 [node name="RightObstaclePath" type="Path3D" parent="ObstaclePaths"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87968, 0, 4.56675)
-curve = SubResource("Curve3D_ca7g5")
+transform = Transform3D(1, -6.87574e-11, -5.82077e-11, 6.88809e-11, 1, 0, -5.82077e-11, 0, 1, 1.87968, 7.09406e-11, 4.56675)
+curve = SubResource("Curve3D_rbbcv")
 
 [node name="Obstacle" parent="ObstaclePaths/RightObstaclePath" instance=ExtResource("8_twcpv")]
 transform = Transform3D(-1, -3.90967e-08, -7.81933e-08, 0, 0.894427, -0.447214, 8.74228e-08, -0.447214, -0.894427, 0.120319, 0, -103.567)
@@ -123,13 +159,13 @@ progress = 0.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9917, 0, 0)
 
 [node name="LeftObstaclePath" type="Path3D" parent="ObstaclePathsRight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12032, 0, 4.56675)
+transform = Transform3D(1, -6.87574e-11, -5.82077e-11, 6.88809e-11, 1, 0, -5.82077e-11, 0, 1, -2.12032, 1.65856e-09, 4.56675)
 curve = SubResource("Curve3D_ca7g5")
 
 [node name="Obstacle" parent="ObstaclePathsRight/LeftObstaclePath" instance=ExtResource("8_twcpv")]
-transform = Transform3D(-1, -3.90967e-08, -7.81933e-08, 0, 0.894427, -0.447214, 8.74228e-08, -0.447214, -0.894427, 0.120319, 0, -103.567)
+transform = Transform3D(1, 0, 0, 0, 0.894427, -0.447214, 0, 0.447214, 0.894427, 0.120319, 0, 0.433249)
 progress = 0.0
-_speed = -0.25
+_speed = 0.25
 _loops = true
 
 [node name="RightObstaclePath" type="Path3D" parent="ObstaclePathsRight"]
@@ -137,9 +173,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.87968, 0, 4.56675)
 curve = SubResource("Curve3D_ca7g5")
 
 [node name="Obstacle" parent="ObstaclePathsRight/RightObstaclePath" instance=ExtResource("8_twcpv")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.120319, 1, -51.5667)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.120319, 1, -51.5668)
 progress = 52.2361
-_speed = -0.25
+_speed = 0.25
 _loops = true
 
 [node name="UiLayer" type="CanvasLayer" parent="."]
@@ -147,10 +183,13 @@ unique_name_in_owner = true
 
 [node name="GameOverMenu" type="Control" parent="UiLayer"]
 process_mode = 2
+visible = false
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("8_vo0te")
 
 [node name="ColorRect" type="ColorRect" parent="UiLayer/GameOverMenu"]
@@ -182,9 +221,10 @@ label_settings = SubResource("LabelSettings_s75j3")
 process_mode = 2
 visible = false
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 640.0
+anchor_right = 0.993
+anchor_bottom = 0.975
+offset_right = 8.06396
+offset_bottom = 8.20001
 script = ExtResource("10_hw3ju")
 _fadeDuration = 0.1
 
@@ -195,3 +235,45 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameUI" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="HealthLabel" type="Label" parent="UiLayer/GameUI"]
+layout_mode = 0
+offset_right = 216.0
+offset_bottom = 96.0
+label_settings = SubResource("LabelSettings_yqome")
+
+[node name="SelectionScreen" type="Control" parent="UiLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_vo0te")
+
+[node name="ColorRect" type="ColorRect" parent="UiLayer/SelectionScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1197.69, -9.21823e-11, -1.07288e-06, 1.42879e-06, 0.903219, 9.31323e-10, -1.19209e-07, 1.36424e-12, 1201.79, 0, -0.002, 0)
+mesh = SubResource("PlaneMesh_q7e3x")
+
+[node name="CrossRoadsTargetPoint" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, -1.46574e-09, -7.567e-10, 1.46587e-09, 1, 2.27374e-12, -7.567e-10, -4.09273e-12, 1, 9.91316, 0.27704, -7)
+gizmo_extents = 1.71
+
+[node name="CrossRoadsSpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, -1.11649e-09, -5.82077e-10, 1.11662e-09, 1, 1.36424e-12, -5.82077e-10, -3.18323e-12, 1, 9.99999, 0.278, -104)
+gizmo_extents = 1.71

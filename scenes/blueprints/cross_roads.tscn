@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://qwiucfpg8ar7"]
+
+[ext_resource type="Script" path="res://scripts/CrossRoads.cs" id="1_netci"]
+[ext_resource type="Texture2D" uid="uid://d0wymjsp1sqdy" path="res://sprites/road_section_across.png" id="2_gu4ua"]
+[ext_resource type="Texture2D" uid="uid://b4xlut7a48ajr" path="res://sprites/road_crossing.png" id="3_psbkt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_upe5h"]
+albedo_texture = ExtResource("2_gu4ua")
+uv1_scale = Vector3(10, 1, 1)
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r1bm7"]
+material = SubResource("StandardMaterial3D_upe5h")
+size = Vector2(100, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1upps"]
+albedo_texture = ExtResource("2_gu4ua")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gu5ig"]
+material = SubResource("StandardMaterial3D_1upps")
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vm05"]
+albedo_texture = ExtResource("3_psbkt")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_grrxe"]
+material = SubResource("StandardMaterial3D_1vm05")
+size = Vector2(10, 10)
+
+[node name="CrossRoads" type="Node3D"]
+transform = Transform3D(1, -5.34418e-10, -2.91038e-10, 5.34544e-10, 1, 4.54747e-13, -2.91038e-10, -1.36424e-12, 1, 0, 0, 0)
+script = ExtResource("1_netci")
+_speed = 50.0
+
+[node name="Road3" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-0.999999, 0.00147386, -8.67858e-08, 0.00147386, 0.999998, -0.00145974, -2.06352e-06, -0.00145974, -0.999999, -65, -8.60267e-21, 0)
+mesh = SubResource("PlaneMesh_r1bm7")
+skeleton = NodePath("../..")
+
+[node name="Road4" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-0.999999, 0.00147386, -8.67858e-08, 0.00147386, 0.999998, -0.00145974, -2.06352e-06, -0.00145974, -0.999999, 65, -6.94907e-08, 3.78349e-08)
+mesh = SubResource("PlaneMesh_r1bm7")
+skeleton = NodePath("../..")
+
+[node name="Road5" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.999999, -0.00147386, 1.74207e-07, 0.00147386, 0.999998, -0.00145974, 1.9761e-06, 0.00145974, 0.999999, 0, 0, 0)
+mesh = SubResource("PlaneMesh_gu5ig")
+skeleton = NodePath("../..")
+
+[node name="Road6" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.999999, -0.00147386, -6.39199e-10, 0.00147386, 0.999998, -0.00145974, 2.15094e-06, 0.00145974, 0.999999, -10, 5.34544e-09, -2.91038e-09)
+mesh = SubResource("PlaneMesh_grrxe")
+skeleton = NodePath("../..")
+
+[node name="Road7" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-0.999999, 0.00147386, 8.806e-08, 0.00147386, 0.999998, -0.00145974, -2.23836e-06, -0.00145974, -0.999999, 10, -5.34544e-09, 2.91038e-09)
+mesh = SubResource("PlaneMesh_grrxe")
+skeleton = NodePath("../..")
