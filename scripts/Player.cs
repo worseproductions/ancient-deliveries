@@ -7,6 +7,8 @@ public partial class Player : CharacterBody3D {
 	[Export] private float _speed = 300.0f;
 	[Export] public int MaxHealth = 5;
 
+	[Export] public AudioStreamPlayer _audioStreamPlayer;
+	
 	public int Health;
 	
 	[Signal] public delegate void DiedEventHandler();
@@ -38,6 +40,7 @@ public partial class Player : CharacterBody3D {
 	public void TakeDamage() {
 		Health--;
 		EmitSignal(SignalName.HealthChanged, Health);
+		_audioStreamPlayer.Play();
 		GD.Print($"Health: {Health}");
 		if (Health > 0) return;
 		GD.Print("Game Over");
