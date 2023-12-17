@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://46qlm3geacag"]
+[gd_scene load_steps=7 format=3 uid="uid://46qlm3geacag"]
 
 [ext_resource type="Script" path="res://scripts/Obstacle.cs" id="1_ldim2"]
 [ext_resource type="Texture2D" uid="uid://cfcrot2wlfty2" path="res://sprites/car_blue.png" id="2_rw2wp"]
 [ext_resource type="Texture2D" uid="uid://865wl4bvseuh" path="res://sprites/car_blue_back.png" id="3_3q6h2"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="3_bt6xp"]
+[ext_resource type="AudioStream" uid="uid://bwsyksl3l4jh6" path="res://audio/sfx_car1.wav" id="5_rqx36"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oj1q2"]
 size = Vector3(4.06494, 2.92273, 1)
@@ -88,3 +89,12 @@ light_size = 50.0
 shadow_enabled = true
 spot_range = 4096.0
 spot_angle = 25.0
+
+[node name="sfx" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_rqx36")
+volume_db = -10.0
+autoplay = true
+max_polyphony = 4
+bus = &"SFX"
+emission_angle_enabled = true
+doppler_tracking = 2

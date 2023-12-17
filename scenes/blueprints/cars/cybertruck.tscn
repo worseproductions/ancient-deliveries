@@ -9,7 +9,7 @@
 [node name="SpriteFront" parent="Area3D" index="1"]
 texture = ExtResource("2_spxy3")
 
-[node name="SpriteBack" parent="Area3D" index="2"]
+[node name="SpriteBack" parent="Area3D" index="4"]
 texture = ExtResource("3_cmfat")
 
 [node name="SpotLight3D" parent="Lights" index="0"]

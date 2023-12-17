@@ -9,5 +9,5 @@
 [node name="SpriteFront" parent="Area3D" index="1"]
 texture = ExtResource("2_turfk")
 
-[node name="SpriteBack" parent="Area3D" index="2"]
+[node name="SpriteBack" parent="Area3D" index="4"]
 texture = ExtResource("3_sq0el")

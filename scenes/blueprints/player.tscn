@@ -1,18 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbj4gpkgga8t8"]
+[gd_scene load_steps=8 format=3 uid="uid://dbj4gpkgga8t8"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_b1wj1"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="2_g0ufd"]
 [ext_resource type="Texture2D" uid="uid://c08umln64ru74" path="res://sprites/oetzi.png" id="3_42e5q"]
 [ext_resource type="Texture2D" uid="uid://cw2gmh1vgldf0" path="res://sprites/cart_back.png" id="4_qm67w"]
 [ext_resource type="Texture2D" uid="uid://dy2m87u7d8dju" path="res://sprites/package.png" id="5_0085a"]
+[ext_resource type="AudioStream" uid="uid://dn33k03wndtlr" path="res://audio/hurt_sound.mp3" id="6_6twnl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dbspv"]
 radius = 0.689408
 height = 2.45616
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_audioStreamPlayer")]
 script = ExtResource("1_b1wj1")
 _speed = 5.0
+_audioStreamPlayer = NodePath("AudioStreamPlayer")
 
 [node name="Paper" type="Sprite3D" parent="."]
 transform = Transform3D(0.144, 0, 0, 0, 0.219, 0, 0, 0, 1, 0.295383, 1.11316, 0)
@@ -70,3 +72,7 @@ sorting_offset = 1.0
 offset = Vector2(264.37, -208.03)
 billboard = 2
 texture = ExtResource("5_0085a")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_6twnl")
+bus = &"SFX"

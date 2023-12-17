@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmg1otljbgldy"]
+[gd_scene load_steps=3 format=3 uid="uid://bmg1otljbgldy"]
 
 [ext_resource type="Script" path="res://scripts/Settings.cs" id="1_mhgml"]
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="2_7mtdi"]
-[ext_resource type="AudioStream" uid="uid://cttbhvkdfhg5x" path="res://audio/music_options.mp3" id="3_h25df"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -72,8 +71,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_h25df")
-autoplay = true
-bus = &"Music"

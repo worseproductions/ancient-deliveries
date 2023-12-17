@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cs0nxa4i42137"]
+[gd_scene load_steps=53 format=3 uid="uid://cs0nxa4i42137"]
 
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
@@ -25,10 +25,16 @@
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="17_h8jry"]
 [ext_resource type="Texture2D" uid="uid://nhwa1f6w5pti" path="res://sprites/wrong_cutscene.png" id="20_enho2"]
 [ext_resource type="Texture2D" uid="uid://yxc4iu4scg4m" path="res://sprites/correct_cutscene.png" id="21_cc68t"]
-[ext_resource type="Texture2D" uid="uid://7xogx7u5lwjm" path="res://sprites/container.png" id="24_cx2rr"]
 [ext_resource type="PackedScene" uid="uid://bs2xxcrt4rnc1" path="res://scenes/blueprints/bush.tscn" id="25_7ultf"]
 [ext_resource type="PackedScene" uid="uid://bqkh1ovo17acs" path="res://scenes/blueprints/bush_2.tscn" id="26_8qgfb"]
 [ext_resource type="PackedScene" uid="uid://cr8n3714wx2fk" path="res://scenes/blueprints/bush_3.tscn" id="27_e3ffd"]
+[ext_resource type="AudioStream" uid="uid://cyp03db3gxkb2" path="res://audio/grunt_sad.mp3" id="27_rq7ki"]
+[ext_resource type="AudioStream" uid="uid://iu27k8oeb64i" path="res://audio/grunt_happy.mp3" id="28_8xaba"]
+[ext_resource type="Texture2D" uid="uid://bsgfpv11pupjm" path="res://sprites/container_base.png" id="29_6wqja"]
+[ext_resource type="AudioStream" uid="uid://b62j87s2vnaqu" path="res://audio/music_main.mp3" id="30_rg3v5"]
+[ext_resource type="Texture2D" uid="uid://cq0dx021ms0w5" path="res://sprites/container_floor_left.png" id="30_v0leh"]
+[ext_resource type="Texture2D" uid="uid://bcskcl3ejdojv" path="res://sprites/container_floor_right.png" id="31_36rv5"]
+[ext_resource type="AudioStream" uid="uid://1cdmtqem4chw" path="res://audio/burning.mp3" id="31_155nw"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
 albedo_texture = ExtResource("5_trgkd")
@@ -91,7 +97,7 @@ font_size = 64
 font_color = Color(0.333333, 0.309804, 0.329412, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxsqb"]
-size = Vector2(128, 16)
+size = Vector2(128, 24)
 
 [sub_resource type="Gradient" id="Gradient_nrif1"]
 colors = PackedColorArray(0, 0.360784, 0, 1, 0.184314, 0.929412, 0, 1)
@@ -114,17 +120,19 @@ albedo_texture = SubResource("NoiseTexture2D_mvaxf")
 [sub_resource type="PlaneMesh" id="PlaneMesh_q7e3x"]
 material = SubResource("StandardMaterial3D_m654t")
 
-[node name="Test" type="Node3D" node_paths=PackedStringArray("_bushPaths", "_crossRoadsSpawnPoint")]
+[node name="Test" type="Node3D" node_paths=PackedStringArray("_bushPaths", "_crossRoadsSpawnPoint", "_music", "_burningSound")]
 process_priority = -1
 transform = Transform3D(0.999999, -0.00146681, 0.000879762, 0.0014668, 0.999999, 7.0587e-06, -0.000879771, -5.74413e-06, 1, 0, 0, 0)
 script = ExtResource("1_q4brq")
-_spawnMultiplier = 0.5
+_spawnMultiplier = 0.8
 _obstacleScenes = Array[PackedScene]([ExtResource("2_6cqmv"), ExtResource("3_723wi"), ExtResource("4_yemtb"), ExtResource("5_7yc0j"), ExtResource("6_uwu4t"), ExtResource("7_j3uu5")])
-_bushScenes = Array[PackedScene]([null, ExtResource("25_7ultf"), ExtResource("26_8qgfb"), ExtResource("27_e3ffd"), ExtResource("11_ypo6o"), ExtResource("12_huijp")])
+_bushScenes = Array[PackedScene]([ExtResource("25_7ultf"), ExtResource("26_8qgfb"), ExtResource("27_e3ffd"), ExtResource("11_ypo6o"), ExtResource("12_huijp")])
 _bushPaths = [NodePath("Bushes/BushPathLeft"), NodePath("Bushes/BushPathLeft3"), NodePath("Bushes/BushPathLeft2"), NodePath("Bushes/BushPathRight"), NodePath("Bushes/BushPathRight2"), NodePath("Bushes/BushPathRight3")]
 _bushSpawnInterval = 0.1
 _crossRoadsScene = ExtResource("4_ihku2")
 _crossRoadsSpawnPoint = NodePath("CrossRoadsSpawnPoint")
+_music = NodePath("music")
+_burningSound = NodePath("burning")
 
 [node name="Road" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
@@ -223,7 +231,6 @@ unique_name_in_owner = true
 
 [node name="GameOverMenu" type="Control" parent="UiLayer"]
 process_mode = 2
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,7 +238,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_c5l3t")
-_fadeInDuration = 2.0
 
 [node name="ColorRect" type="ColorRect" parent="UiLayer/GameOverMenu"]
 layout_mode = 1
@@ -444,9 +450,11 @@ visible = false
 [node name="GameUI" type="Control" parent="UiLayer"]
 unique_name_in_owner = true
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("10_c5l3t")
 
@@ -462,10 +470,13 @@ metadata/_edit_group_ = true
 
 [node name="PackageListContainer" type="TextureRect" parent="UiLayer/GameUI"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 824.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -328.0
 offset_top = 16.0
-offset_right = 1080.0
+offset_right = -72.0
 offset_bottom = 88.0
 scale = Vector2(1.25661, 2.92)
 texture = ExtResource("5_egjwb")
@@ -517,9 +528,12 @@ unique_name_in_owner = true
 process_mode = 3
 visible = false
 modulate = Color(1, 1, 1, 0)
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("10_c5l3t")
 _waitDuration = 2.0
 
@@ -543,14 +557,22 @@ texture = ExtResource("20_enho2")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UiLayer/GameUI/WrongOptionCutscene"]
+stream = ExtResource("27_rq7ki")
+volume_db = 7.5
+bus = &"SFX"
+
 [node name="CorrectOptionCutscene" type="Control" parent="UiLayer/GameUI"]
 unique_name_in_owner = true
 process_mode = 3
 visible = false
 modulate = Color(1, 1, 1, 0)
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("10_c5l3t")
 _waitDuration = 2.0
 
@@ -573,6 +595,11 @@ grow_vertical = 2
 texture = ExtResource("21_cc68t")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UiLayer/GameUI/CorrectOptionCutscene"]
+stream = ExtResource("28_8xaba")
+volume_db = 7.5
+bus = &"SFX"
 
 [node name="Control" type="CanvasLayer" parent="UiLayer/GameUI"]
 
@@ -610,7 +637,25 @@ region_rect = Rect2(1, 1, 1442, 1589)
 [node name="Sprite2D" type="Sprite2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/StaticBody2D"]
 position = Vector2(-64, -132)
 scale = Vector2(0.195122, 0.217105)
-texture = ExtResource("24_cx2rr")
+texture = ExtResource("29_6wqja")
+region_enabled = true
+region_rect = Rect2(341, 99, 656, 1216)
+
+[node name="FloorLeft" type="Sprite2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/StaticBody2D"]
+unique_name_in_owner = true
+position = Vector2(-120, -8.00002)
+scale = Vector2(0.195122, 0.217105)
+texture = ExtResource("30_v0leh")
+offset = Vector2(287, -571.151)
+region_enabled = true
+region_rect = Rect2(341, 99, 656, 1216)
+
+[node name="FloorRight" type="Sprite2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/StaticBody2D"]
+unique_name_in_owner = true
+position = Vector2(-8.00004, -8.00002)
+scale = Vector2(0.195122, 0.217105)
+texture = ExtResource("31_36rv5")
+offset = Vector2(-287, -571.151)
 region_enabled = true
 region_rect = Rect2(341, 99, 656, 1216)
 
@@ -623,7 +668,7 @@ position = Vector2(0, 192)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/FullArea"]
-position = Vector2(-64, -408)
+position = Vector2(-64, -420)
 shape = SubResource("RectangleShape2D_sxsqb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -664,3 +709,15 @@ curve = SubResource("Curve3D_gyapk")
 [node name="BushPathRight3" type="Path3D" parent="Bushes"]
 transform = Transform3D(1, -1.00007e-09, -5.82077e-11, 1.00021e-09, 1, 0, -5.82077e-11, -1.81899e-12, 1, 34.4175, -0.053594, 4.5989)
 curve = SubResource("Curve3D_gyapk")
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("30_rg3v5")
+autoplay = true
+bus = &"Music"
+
+[node name="burning" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("31_155nw")
+volume_db = 7.5
+bus = &"Music"

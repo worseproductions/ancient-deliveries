@@ -21,37 +21,36 @@ public partial class DecisionScreen : Fader {
 	public List<string> Jobs;
 	public string CorrectJob;
 
-	private SelectableOption _leftOption;
-	private SelectableOption _straightOption;
-	private SelectableOption _rightOption;
+	private Button _leftOption;
+	private Button _straightOption;
+	private Button _rightOption;
 
 	private int _correctOptionIndex;
 
 	public override void _Ready() {
 		base._Ready();
 
-		_leftOption = GetNode<SelectableOption>("HFlowContainer/LeftOption");
-		_straightOption = GetNode<SelectableOption>("HFlowContainer/StraightOption");
-		_rightOption = GetNode<SelectableOption>("HFlowContainer/RightOption");
-		_leftOption.GrabFocus();
+		_leftOption = GetNode<Button>("%LeftOption");
+		_straightOption = GetNode<Button>("%StraightOption");
+		_rightOption = GetNode<Button>("%RightOption");
 		_timerBar = GetNode<TextureProgressBar>("%TimerBar");
 		_timerBar.MaxValue = _timerDuration;
 		_timer = 0.0f;
 		_timerBar.Value = _timer;
 
-		_leftOption.Selected += () => {
+		_leftOption.Pressed += () => {
 			GD.Print($"Option selected: 0 / {_correctOptionIndex}");
 			EmitSignal(_correctOptionIndex == 0 ? SignalName.ActionCorrect : SignalName.ActionWrong);
 			_stopTimer = true;
 		};
 
-		_straightOption.Selected += () => {
+		_straightOption.Pressed += () => {
 			GD.Print($"Option selected: 1 / {_correctOptionIndex}");
 			EmitSignal(_correctOptionIndex == 1 ? SignalName.ActionCorrect : SignalName.ActionWrong);
 			_stopTimer = true;
 		};
 
-		_rightOption.Selected += () => {
+		_rightOption.Pressed += () => {
 			GD.Print($"Option selected: 2 / {_correctOptionIndex}");
 			EmitSignal(_correctOptionIndex == 2 ? SignalName.ActionCorrect : SignalName.ActionWrong);
 			_stopTimer = true;
@@ -79,10 +78,11 @@ public partial class DecisionScreen : Fader {
 		var otherJobs = Jobs.ToArray();
 		GD.Print($"Other jobs: {otherJobs.Stringify()}");
 
-		_leftOption.SetText(_correctOptionIndex == 0 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)]);
-		_straightOption.SetText(_correctOptionIndex == 1 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)]);
-		_rightOption.SetText(_correctOptionIndex == 2 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)]);
-		
+		_leftOption.Text = _correctOptionIndex == 0 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)];
+		_straightOption.Text = _correctOptionIndex == 1 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)];
+		_rightOption.Text = _correctOptionIndex == 2 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)];
+		_leftOption.GrabFocus();
+		GD.Print(_leftOption.HasFocus());
 		
 		_timer = 0.0f;
 		_stopTimer = false;

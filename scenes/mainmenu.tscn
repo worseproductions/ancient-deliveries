@@ -1,21 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://c26yavb4lvs3h"]
+[gd_scene load_steps=11 format=3 uid="uid://c26yavb4lvs3h"]
 
 [ext_resource type="Texture2D" uid="uid://cpo7jmcgsayc7" path="res://sprites/TitleAncientDeliveries.png" id="1_2qbhe"]
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="1_bi8iq"]
 [ext_resource type="Script" path="res://scripts/MenuHandler.cs" id="1_de1fd"]
 [ext_resource type="PackedScene" uid="uid://cd2j7slpvtsm4" path="res://scenes/controls_screen.tscn" id="2_dsc7r"]
-[ext_resource type="AudioStream" uid="uid://fdhx7uoyygjh" path="res://audio/sfx_paper1.wav" id="3_kudjw"]
 [ext_resource type="PackedScene" uid="uid://bmg1otljbgldy" path="res://scenes/settings.tscn" id="3_ov3dv"]
 [ext_resource type="Texture2D" uid="uid://cbyfnk24f28d8" path="res://sprites/Oetzivorne_1.png" id="5_wx21f"]
 [ext_resource type="Texture2D" uid="uid://b7u7v34kpodf7" path="res://sprites/WorseLogoBanner.png" id="6_gv7bt"]
 [ext_resource type="Script" path="res://scripts/LinkCaller.cs" id="7_hdlqg"]
 [ext_resource type="AudioStream" uid="uid://62wobjyktywq" path="res://audio/music_menu.mp3" id="8_ra82e"]
 [ext_resource type="Texture2D" uid="uid://d1tpf0ia6dtcj" path="res://sprites/menu_bg.png" id="9_3mjwl"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k0lqi"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wjqsp"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Mainmenu" type="Control"]
 layout_mode = 3
@@ -26,7 +20,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_de1fd")
 StartScene = ExtResource("2_dsc7r")
-ButtonSfx = ExtResource("3_kudjw")
 OptionsScene = ExtResource("3_ov3dv")
 
 [node name="bg" type="TextureRect" parent="."]
@@ -42,26 +35,18 @@ texture = ExtResource("9_3mjwl")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="Title" type="Panel" parent="."]
+[node name="TitleImage" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = 288.0
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_k0lqi")
-
-[node name="TitleImage" type="TextureRect" parent="Title"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = 96.0
-offset_right = -622.0
-offset_bottom = 56.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -364.0
+offset_right = -76.0
+offset_bottom = 136.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.200713
@@ -69,33 +54,22 @@ texture = ExtResource("1_2qbhe")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Options" type="Panel" parent="."]
+[node name="VFlowContainer" type="VFlowContainer" parent="."]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -328.0
-offset_right = -624.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_wjqsp")
-
-[node name="VFlowContainer" type="VFlowContainer" parent="Options"]
-layout_mode = 1
-anchors_preset = 13
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -164.0
-offset_top = -16.0
-offset_right = 164.0
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -20.0
+offset_right = -128.0
+offset_bottom = 316.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="StartButton" type="Button" parent="Options/VFlowContainer"]
+[node name="StartButton" type="Button" parent="VFlowContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../OptionsButton")
@@ -103,35 +77,45 @@ theme = ExtResource("1_bi8iq")
 theme_override_font_sizes/font_size = 100
 text = "qc"
 
-[node name="MarginContainer" type="MarginContainer" parent="Options/VFlowContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VFlowContainer"]
 custom_minimum_size = Vector2(0, 15.77)
 layout_mode = 2
 
-[node name="OptionsButton" type="Button" parent="Options/VFlowContainer"]
+[node name="OptionsButton" type="Button" parent="VFlowContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_top = NodePath("../StartButton")
 theme = ExtResource("1_bi8iq")
 theme_override_font_sizes/font_size = 100
+disabled = true
 text = "fge"
 
 [node name="oetzi" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 488.0
-offset_top = 112.0
-offset_right = 1227.0
-offset_bottom = 654.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -203.0
+offset_right = 699.0
+offset_bottom = 339.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("5_wx21f")
 
 [node name="Link" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 628.0
-offset_top = 25.0
-offset_right = -11.0
-offset_bottom = -513.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 152.0
+offset_top = -308.0
+offset_right = 328.0
+offset_bottom = -229.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0

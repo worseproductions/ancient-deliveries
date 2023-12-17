@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfc40trkthvl8"]
+[gd_scene load_steps=5 format=3 uid="uid://bfc40trkthvl8"]
 
 [ext_resource type="Script" path="res://scripts/DecisionScreen.cs" id="1_0rcna"]
-[ext_resource type="PackedScene" uid="uid://bpcwhmwqh7dv6" path="res://scenes/blueprints/selectable-option.tscn" id="2_55cdr"]
+[ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="2_yh7rt"]
+[ext_resource type="Script" path="res://scripts/SelectableOption.cs" id="3_a6m1s"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="3_b5rp2"]
 
 [node name="DecisionScreen" type="Control"]
@@ -23,17 +24,38 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="LeftOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
+[node name="LeftOption" type="Button" parent="HFlowContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 200)
 layout_mode = 2
-focus_mode = 2
+focus_neighbor_left = NodePath("../RightOption")
+focus_neighbor_right = NodePath("../StraightOption")
+theme = ExtResource("2_yh7rt")
+theme_override_font_sizes/font_size = 50
+text = "33333"
+script = ExtResource("3_a6m1s")
 
-[node name="StraightOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
+[node name="StraightOption" type="Button" parent="HFlowContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 200)
 layout_mode = 2
-focus_mode = 2
+focus_neighbor_left = NodePath("../LeftOption")
+focus_neighbor_right = NodePath("../RightOption")
+theme = ExtResource("2_yh7rt")
+theme_override_font_sizes/font_size = 50
+text = "55555"
+script = ExtResource("3_a6m1s")
 
-[node name="RightOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
+[node name="RightOption" type="Button" parent="HFlowContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(310, 200)
 layout_mode = 2
-focus_mode = 2
+focus_neighbor_left = NodePath("../StraightOption")
+focus_neighbor_right = NodePath("../LeftOption")
+theme = ExtResource("2_yh7rt")
+theme_override_font_sizes/font_size = 50
+text = "44444"
+script = ExtResource("3_a6m1s")
 
 [node name="TimerBar" type="TextureProgressBar" parent="."]
 unique_name_in_owner = true

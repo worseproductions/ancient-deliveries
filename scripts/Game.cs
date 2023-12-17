@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Godot;
@@ -22,6 +23,9 @@ public partial class Game : Node3D {
 	[Export] private int _numberOfJobs = 6;
 	[Export] private int _jobAddressLength = 2;
 	[Export] private int _maxAddressLength = 5;
+	[Export] private AudioStreamPlayer _music;
+	[Export] private AudioStreamPlayer _burningSound;
+	private float _time = 0.0f;
 
 	private float _obstacleSpawnInterval = 1.0f;
 	private CanvasLayer _ui;
@@ -99,9 +103,12 @@ public partial class Game : Node3D {
 		_packageList.Text = sb.ToString();
 		_packageListContainer.FadeWithWait();
 		_gameUi.FadeIn();
+		
+		_burningSound.Stop();
 	}
 
 	public override void _Process(double delta) {
+		_time += (float)delta;
 		if (_crossRoads == null) CrossRoadsTimer(delta);
 		ObstacleTimer(delta);
 		BushTimer(delta);
@@ -157,6 +164,7 @@ public partial class Game : Node3D {
 	}
 
 	private void ShowDecisionScreen() {
+		if (_player.Health <= 0) return;
 		_gameUi.FadeOut();
 		GD.Print("Showing decision screen");
 		_decisionScreen.SetJobs(_jobs);
@@ -186,6 +194,9 @@ public partial class Game : Node3D {
 		_decisionScreen.FadeOut();
 		var cutscene = correct ? _correctOptionCutscene : _wrongOptionCutscene;
 		cutscene.FadeWithWait();
+		cutscene.FadeInComplete += () => {
+			cutscene.GetNode<AudioStreamPlayer>("AudioStreamPlayer").Play();
+		};
 		cutscene.FadeOutComplete += () => {
 			GD.Print("Restarting game");
 			_gameUi.FadeIn();
@@ -234,7 +245,7 @@ public partial class Game : Node3D {
 		var bushPathNumber = new Random().Next(0, _bushPaths.Length);
 		for (var i = 0; i < bushPathNumber; i++) {
 			var bushIndex = new Random().Next(0, _bushScenes.Length);
-			var bush = _bushScenes[bushIndex].Instantiate<Obstacle>();
+			var bush = _bushScenes[bushIndex].Instantiate();
 			_bushPaths[i].AddChild(bush);
 		}
 	}
@@ -250,6 +261,8 @@ public partial class Game : Node3D {
 		_gameUi.FadeOutComplete += () => {
 			GetTree().Paused = true;
 			_gameOverMenu.FadeIn();
+			_music.Stop();
+			_burningSound.Play();
 			_restartButton.GrabFocus();
 		};
 	}

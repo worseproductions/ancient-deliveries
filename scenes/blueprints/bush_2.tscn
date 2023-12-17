@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://cc8pgjj7m4jw4" path="res://sprites/bush_2.png" id="2_26dhd"]
 
 [node name="Bush" instance=ExtResource("1_xiv6l")]
-EnableLights = false
 
 [node name="SpriteFront" parent="Area3D" index="1"]
 texture = ExtResource("2_26dhd")
