@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Godot;
 
 namespace AncientDeliveries.scripts;
@@ -11,10 +13,12 @@ public partial class Game : Node3D {
 	[Export] private float _spawnMultiplier = 1.0f;
 	[Export] private PackedScene[] _obstacleScenes;
 	[Export] private float _crossRoadsSpawnInterval = 5.0f;
+	[Export] private float _crossRoadsSpawnIntervalAddition = 2.0f;
 	[Export] private PackedScene _crossRoadsScene;
 	[Export] private Marker3D _crossRoadsSpawnPoint;
 	[Export] private int _numberOfJobs = 6;
-	[Export] private int _jobAddressLength = 3;
+	[Export] private int _jobAddressLength = 2;
+	[Export] private int _maxAddressLength = 5;
 
 	private float _obstacleSpawnInterval = 1.0f;
 	private CanvasLayer _ui;
@@ -30,7 +34,13 @@ public partial class Game : Node3D {
 	private Player _player;
 	private Path3D _leftObstaclePath;
 	private Path3D _rightObstaclePath;
-	private Stack<string> _jobs;
+	private List<string> _jobs;
+	private RichTextLabel _packageList;
+	private Fader _packageListContainer;
+	private Node2D _packageContainer;
+	private Marker2D _packageSpawnPoint;
+	private PackedScene _packageScene;
+	private SuikaGame _suikaGame;
 
 	public override void _Ready() {
 		_road = GetNode<Road>("%Road");
@@ -42,19 +52,63 @@ public partial class Game : Node3D {
 		_gameOverMenu = _ui.GetNode<Fader>("GameOverMenu");
 		_gameUi = _ui.GetNode<Control>("GameUI");
 		_decisionScreen = _ui.GetNode<DecisionScreen>("DecisionScreen");
+		_decisionScreen.ActionCorrect += OnDecisionActionCorrect;
+		_decisionScreen.ActionWrong += OnDecisionActionWrong;
+		_suikaGame = _ui.GetNode<SuikaGame>("%SuikaGame");
 		
-		OnPlayerHealthChanged(_player.Health);
+		_suikaGame.BoxFull += () => {
+			_player.Heal();
+			_suikaGame.Empty();
+		};
+		
+		_packageContainer = _ui.GetNode<Node2D>("%SuikaGame");
+		_packageSpawnPoint = _ui.GetNode<Marker2D>("%PackageSpawnPoint");
+		_packageScene = ResourceLoader.Load<PackedScene>("res://scenes/blueprints/package.tscn");
+		
+		OnPlayerHealthChanged(_player.MaxHealth);
 		
 		_pauseMenu.FadeOutComplete += () => GetTree().Paused = false;
 		_player.Died += OnPlayerDie;
 		_player.HealthChanged += OnPlayerHealthChanged;
 
 		_jobs = JobGenerator.GetJobs(_numberOfJobs, _jobAddressLength);
+		_packageListContainer = _gameUi.GetNode<Fader>("%PackageListContainer");
+		_packageList = _gameUi.GetNode<RichTextLabel>("%PackageList");
+		// set the text to the jobs separated by a new line
+		var jobsWithoutFirst = new List<string>(_jobs);
+		jobsWithoutFirst.RemoveAt(0);
+		StringBuilder sb = new();
+		sb.Append("[color=red]").Append(_jobs.First()).AppendLine("[/color]");
+		foreach (var job in jobsWithoutFirst) {
+			sb.AppendLine(job);
+		}
+		_packageList.Text = sb.ToString();
+		_packageListContainer.FadeIn();
+		_packageListContainer.FadeInComplete += () => _packageListContainer.FadeOut();
 	}
 
 	public override void _Process(double delta) {
 		if (_crossRoads == null) CrossRoadsTimer(delta);
 		ObstacleTimer(delta);
+	}
+
+	private void UpdateJobList() {
+		var numberOfJobs = _jobs.Count;
+		if (numberOfJobs <= 4) {
+			_crossRoadsSpawnInterval += _crossRoadsSpawnIntervalAddition;
+			_jobAddressLength = Math.Min(_maxAddressLength, _jobAddressLength + 1);
+			var newJobs = JobGenerator.GetJobs(3, _jobAddressLength);
+			// append new jobs to bottom of stack
+			_jobs.AddRange(newJobs);
+		}
+		var jobsWithoutFirst = new List<string>(_jobs);
+		jobsWithoutFirst.RemoveAt(0);
+		StringBuilder sb = new();
+		sb.Append("[color=red]").Append(_jobs.First()).AppendLine("[/color]");
+		foreach (var job in jobsWithoutFirst) {
+			sb.AppendLine(job);
+		}
+		_packageList.Text = sb.ToString();
 	}
 
 	private void CrossRoadsTimer(double delta) {
@@ -83,22 +137,51 @@ public partial class Game : Node3D {
 		GD.Print("Showing decision screen");
 		_decisionScreen.SetJobs(_jobs);
 		_decisionScreen.FadeIn();
-		_decisionScreen.ActionCorrect += OnDecisionActionCorrect;
-		_decisionScreen.ActionWrong += OnDecisionActionWrong;
 		GetTree().Paused = true;
 	}
 
 	private void OnDecisionActionCorrect() {
 		GD.Print("Correct option");
+		var package = _packageScene.Instantiate<Package>();
+		_packageContainer.AddChild(package);
+		package.GlobalPosition = _packageSpawnPoint.GlobalPosition + new Vector2(new Random().Next(-10, 10), 0);
+		package.GlobalRotation = (float)new Random().NextDouble() * 360;
+		CloseDecisionScreen();
 	}
 	
 	private void OnDecisionActionWrong() {
 		GD.Print("Wrong option");
+		_player.TakeDamage();
+		CloseDecisionScreen();
+	}
+	
+	private void CloseDecisionScreen() {
+		UpdateJobList();
+		DespawnCrossRoads();
+		DespawnCars();
+		_decisionScreen.FadeOut();
+		_decisionScreen.FadeOutComplete += () => {
+			GetTree().Paused = false;
+			_packageListContainer.FadeIn();
+			_packageListContainer.FadeInComplete += () => {
+				_packageListContainer.FadeOut();
+			};
+		};
 	}
 
 	private void DespawnCrossRoads() {
-		_crossRoads.QueueFree();
+		_crossRoads?.QueueFree();
 		_crossRoads = null;
+	}
+
+	private void DespawnCars() {
+		foreach (var child in _leftObstaclePath.GetChildren()) {
+			child.QueueFree();
+		}
+
+		foreach (var child in _rightObstaclePath.GetChildren()) {
+			child.QueueFree();
+		}
 	}
 
 	private void SpawnObstacle() {

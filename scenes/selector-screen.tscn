@@ -30,3 +30,16 @@ layout_mode = 2
 
 [node name="RightOption" parent="HFlowContainer" instance=ExtResource("2_55cdr")]
 layout_mode = 2
+
+[node name="TimerBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -224.0
+offset_top = 66.0
+offset_right = 225.0
+offset_bottom = 93.0
+grow_horizontal = 2
+show_percentage = false

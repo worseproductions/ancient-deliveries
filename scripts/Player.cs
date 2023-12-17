@@ -1,16 +1,20 @@
+using System;
 using Godot;
 
 namespace AncientDeliveries.scripts;
 
 public partial class Player : CharacterBody3D {
 	[Export] private float _speed = 300.0f;
-	[Export] public int Health = 3;
+	[Export] public int MaxHealth = 5;
+
+	public int Health;
 	
 	[Signal] public delegate void DiedEventHandler();
 	[Signal] public delegate void HealthChangedEventHandler(int health);
 
 	public override void _Ready() {
-		EmitSignal(SignalName.HealthChanged, Health);
+		Health = MaxHealth;
+		EmitSignal(SignalName.HealthChanged, MaxHealth);
 	}
 
 	public override void _PhysicsProcess(double delta) {
@@ -39,5 +43,10 @@ public partial class Player : CharacterBody3D {
 		GD.Print("Game Over");
 		GetTree().Paused = true;
 		EmitSignal(SignalName.Died);
+	}
+
+	public void Heal() {
+		Health = Math.Min(MaxHealth, Health + 1);
+		EmitSignal(SignalName.HealthChanged, Health);
 	}
 }

@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1j8jiio7bwt1"]
+[gd_scene load_steps=10 format=3 uid="uid://cd2j7slpvtsm4"]
 
-[ext_resource type="Script" path="res://scripts/WaitForKeyPress.cs" id="1_ahgyf"]
 [ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="1_mf7oi"]
+[ext_resource type="Script" path="res://scripts/ControlScreen.cs" id="1_mpjtd"]
+[ext_resource type="PackedScene" uid="uid://cs0nxa4i42137" path="res://scenes/main.tscn" id="2_f3w1e"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="2_tcqc6"]
+[ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="4_acbkv"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sjlxg"]
 texture = ExtResource("1_mf7oi")
@@ -12,6 +14,12 @@ modulate_color = Color(0.596078, 0.596078, 0.596078, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ls0uk"]
 texture = ExtResource("2_tcqc6")
 
+[sub_resource type="InputEventAction" id="InputEventAction_1ypdy"]
+action = &"ui_accept"
+
+[sub_resource type="Shortcut" id="Shortcut_1p8o8"]
+events = [SubResource("InputEventAction_1ypdy")]
+
 [node name="Control-screen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -19,8 +27,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ahgyf")
-scenePathToSwitch = "res://scenes/main.tscn"
+script = ExtResource("1_mpjtd")
+ScenePathToSwitch = ExtResource("2_f3w1e")
 
 [node name="bg" type="Panel" parent="."]
 layout_mode = 1
@@ -43,3 +51,21 @@ offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_ls0uk")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -98.0
+offset_right = -85.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("4_acbkv")
+theme_override_font_sizes/font_size = 64
+shortcut = SubResource("Shortcut_1p8o8")
+text = "Mc"

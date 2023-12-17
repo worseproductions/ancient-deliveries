@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cegvi2h1ue4i1"]
+
+[ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="1_ahpam"]
+
+[resource]
+content_margin_left = 10.0
+content_margin_right = 40.0
+texture = ExtResource("1_ahpam")
+region_rect = Rect2(0, 0, 1444, 1590)
+modulate_color = Color(0.537255, 0.537255, 0.537255, 1)

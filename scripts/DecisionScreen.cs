@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace AncientDeliveries.scripts;
@@ -10,9 +11,13 @@ public partial class DecisionScreen : Fader {
 
 	[Signal]
 	public delegate void ActionWrongEventHandler();
+	
+	[Export] private float _timerDuration = 5.0f;
+	private float _timer = 0.0f;
+	private ProgressBar _timerBar;
 
 
-	public Stack<string> Jobs;
+	public List<string> Jobs;
 	public string CorrectJob;
 
 	private SelectableOption _leftOption;
@@ -27,6 +32,9 @@ public partial class DecisionScreen : Fader {
 		_leftOption = GetNode<SelectableOption>("HFlowContainer/LeftOption");
 		_straightOption = GetNode<SelectableOption>("HFlowContainer/StraightOption");
 		_rightOption = GetNode<SelectableOption>("HFlowContainer/RightOption");
+		_leftOption.GrabFocus();
+		_timerBar = GetNode<ProgressBar>("%TimerBar");
+		_timerBar.MaxValue = _timerDuration;
 		
 		_leftOption.Selected += () => {
 			GD.Print($"Option selected: 0 / {_correctOptionIndex}");
@@ -44,10 +52,21 @@ public partial class DecisionScreen : Fader {
 		};
 	}
 
-	public void SetJobs(Stack<string> jobs) {
+	public override void _Process(double delta) {
+		base._Process(delta);
+		_timer += (float)delta;
+		_timerBar.Value = _timer;
+		
+		if (!(_timer >= _timerDuration)) return;
+		_timer = 0.0f;
+		EmitSignal(SignalName.ActionWrong);
+	}
+
+	public void SetJobs(List<string> jobs) {
 		Jobs = jobs;
 		_correctOptionIndex = new Random().Next(0, 3);
-		var correctJob = Jobs.Pop();
+		var correctJob = Jobs.First();
+		Jobs.Remove(correctJob);
 		GD.Print($"Correct job: {correctJob}");
 		var otherJobs = Jobs.ToArray();
 		GD.Print($"Other jobs: {otherJobs.Stringify()}");

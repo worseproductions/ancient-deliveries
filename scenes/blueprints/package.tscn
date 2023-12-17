@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dto2p3gh5o8bv"]
+
+[ext_resource type="Script" path="res://scripts/Package.cs" id="1_ftiba"]
+[ext_resource type="Texture2D" uid="uid://dy2m87u7d8dju" path="res://sprites/package.png" id="2_kiipv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xfn66"]
+radius = 13.0
+height = 40.0
+
+[node name="PackageRigidBody2D" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_ftiba")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4.76837e-07, -4.17233e-07)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_kiipv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_xfn66")
