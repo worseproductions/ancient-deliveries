@@ -12,6 +12,9 @@ namespace AncientDeliveries.scripts;
 public partial class Game : Node3D {
 	[Export] private float _spawnMultiplier = 1.0f;
 	[Export] private PackedScene[] _obstacleScenes;
+	[Export] private PackedScene[] _bushScenes;
+	[Export] private Path3D[] _bushPaths;
+	[Export] private float _bushSpawnInterval = 1.0f;
 	[Export] private float _crossRoadsSpawnInterval = 5.0f;
 	[Export] private float _crossRoadsSpawnIntervalAddition = 2.0f;
 	[Export] private PackedScene _crossRoadsScene;
@@ -24,10 +27,13 @@ public partial class Game : Node3D {
 	private CanvasLayer _ui;
 	private PauseMenu _pauseMenu;
 	private Fader _gameOverMenu;
-	private Control _gameUi;
+	private Fader _gameUi;
 	private DecisionScreen _decisionScreen;
+	private Fader _correctOptionCutscene;
+	private Fader _wrongOptionCutscene;
 	private CrossRoads _crossRoads;
 	private float _obstacleSpawnTimer;
+	private float _bushSpawnTimer;
 	private float _crossRoadsSpawnTimer;
 	private bool _hasCrossRoadsSpawned;
 	private Road _road;
@@ -41,6 +47,7 @@ public partial class Game : Node3D {
 	private Marker2D _packageSpawnPoint;
 	private PackedScene _packageScene;
 	private SuikaGame _suikaGame;
+	private Button _restartButton;
 
 	public override void _Ready() {
 		_road = GetNode<Road>("%Road");
@@ -49,12 +56,19 @@ public partial class Game : Node3D {
 		_rightObstaclePath = GetNode<Path3D>("%RightObstaclePath");
 		_ui = GetNode<CanvasLayer>("%UiLayer");
 		_pauseMenu = _ui.GetNode<PauseMenu>("PauseMenu");
+		_pauseMenu.Restart += ReloadScene;
+		
 		_gameOverMenu = _ui.GetNode<Fader>("GameOverMenu");
-		_gameUi = _ui.GetNode<Control>("GameUI");
+		_gameUi = _ui.GetNode<Fader>("GameUI");
 		_decisionScreen = _ui.GetNode<DecisionScreen>("DecisionScreen");
 		_decisionScreen.ActionCorrect += OnDecisionActionCorrect;
 		_decisionScreen.ActionWrong += OnDecisionActionWrong;
 		_suikaGame = _ui.GetNode<SuikaGame>("%SuikaGame");
+		_correctOptionCutscene = _ui.GetNode<Fader>("%CorrectOptionCutscene");
+		_wrongOptionCutscene = _ui.GetNode<Fader>("%WrongOptionCutscene");
+		
+		_restartButton = _ui.GetNode<Button>("%RestartButton");
+		_restartButton.Pressed += ReloadScene;
 		
 		_suikaGame.BoxFull += () => {
 			_player.Heal();
@@ -83,13 +97,14 @@ public partial class Game : Node3D {
 			sb.AppendLine(job);
 		}
 		_packageList.Text = sb.ToString();
-		_packageListContainer.FadeIn();
-		_packageListContainer.FadeInComplete += () => _packageListContainer.FadeOut();
+		_packageListContainer.FadeWithWait();
+		_gameUi.FadeIn();
 	}
 
 	public override void _Process(double delta) {
 		if (_crossRoads == null) CrossRoadsTimer(delta);
 		ObstacleTimer(delta);
+		BushTimer(delta);
 	}
 
 	private void UpdateJobList() {
@@ -126,6 +141,14 @@ public partial class Game : Node3D {
 		SpawnObstacle();
 	}
 
+	private void BushTimer(double delta) {
+		_bushSpawnTimer += (float)delta;
+		if (!(_bushSpawnTimer >= _bushSpawnInterval)) return;
+		_bushSpawnTimer = 0.0f;
+		_bushSpawnInterval = (float)new Random().NextDouble() * 0.5f + 0.5f * _spawnMultiplier;
+		SpawnBush();
+	}
+
 	private void SpawnCrossRoads() {
 		_crossRoads = _crossRoadsScene.Instantiate<CrossRoads>();
 		AddChild(_crossRoads);
@@ -134,6 +157,7 @@ public partial class Game : Node3D {
 	}
 
 	private void ShowDecisionScreen() {
+		_gameUi.FadeOut();
 		GD.Print("Showing decision screen");
 		_decisionScreen.SetJobs(_jobs);
 		_decisionScreen.FadeIn();
@@ -146,27 +170,37 @@ public partial class Game : Node3D {
 		_packageContainer.AddChild(package);
 		package.GlobalPosition = _packageSpawnPoint.GlobalPosition + new Vector2(new Random().Next(-10, 10), 0);
 		package.GlobalRotation = (float)new Random().NextDouble() * 360;
-		CloseDecisionScreen();
+		CloseDecisionScreen(true);
 	}
 	
 	private void OnDecisionActionWrong() {
 		GD.Print("Wrong option");
 		_player.TakeDamage();
-		CloseDecisionScreen();
+		CloseDecisionScreen(false);
 	}
 	
-	private void CloseDecisionScreen() {
+	private void CloseDecisionScreen(bool correct) {
 		UpdateJobList();
 		DespawnCrossRoads();
 		DespawnCars();
 		_decisionScreen.FadeOut();
-		_decisionScreen.FadeOutComplete += () => {
-			GetTree().Paused = false;
-			_packageListContainer.FadeIn();
-			_packageListContainer.FadeInComplete += () => {
-				_packageListContainer.FadeOut();
-			};
+		var cutscene = correct ? _correctOptionCutscene : _wrongOptionCutscene;
+		cutscene.FadeWithWait();
+		cutscene.FadeOutComplete += () => {
+			GD.Print("Restarting game");
+			_gameUi.FadeIn();
+			RestartLoop();
 		};
+	}
+
+	private void RestartLoop() {
+		GetTree().Paused = false;
+		_packageListContainer.FadeWithWait();
+	}
+
+	private void ReloadScene() {
+		GetTree().Paused = false;
+		GetTree().ReloadCurrentScene();
 	}
 
 	private void DespawnCrossRoads() {
@@ -187,8 +221,22 @@ public partial class Game : Node3D {
 	private void SpawnObstacle() {
 		var index = new Random().Next(0, _obstacleScenes.Length);
 		var obstacle = _obstacleScenes[index].Instantiate<Obstacle>();
-		if (new Random().NextDouble() > 0.5) _leftObstaclePath.AddChild(obstacle);
-		else _rightObstaclePath.AddChild(obstacle);
+		if (new Random().NextDouble() > 0.5) {
+			_leftObstaclePath.AddChild(obstacle);
+		}
+		else {
+			_rightObstaclePath.AddChild(obstacle);
+		}
+	}
+	
+	private void SpawnBush() {
+		
+		var bushPathNumber = new Random().Next(0, _bushPaths.Length);
+		for (var i = 0; i < bushPathNumber; i++) {
+			var bushIndex = new Random().Next(0, _bushScenes.Length);
+			var bush = _bushScenes[bushIndex].Instantiate<Obstacle>();
+			_bushPaths[i].AddChild(bush);
+		}
 	}
 
 	public override void _Input(InputEvent @event) {
@@ -198,14 +246,23 @@ public partial class Game : Node3D {
 	}
 
 	private void OnPlayerDie() {
-		_gameOverMenu.FadeIn();
+		_gameUi.FadeOut();
+		_gameUi.FadeOutComplete += () => {
+			GetTree().Paused = true;
+			_gameOverMenu.FadeIn();
+			_restartButton.GrabFocus();
+		};
 	}
 
 	private void OnPlayerHealthChanged(int health) {
-		var healthString = "";
+		var healthString = "[color=red]";
 		for (var i = 0; i < health; i++) {
 			healthString += "4";
 		}
-		_gameUi.GetNode<Label>("HealthLabel").Text = healthString;
+		healthString += "[/color][color=lightgray]";
+		for(var i = 0; i < _player.MaxHealth - health; i++) {
+			healthString += "4";
+		}
+		_gameUi.GetNode<RichTextLabel>("HealthLabel").Text = healthString;
 	}
 }

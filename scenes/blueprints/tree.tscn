@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwb6he73fo8ho"]
+
+[ext_resource type="PackedScene" uid="uid://bs2xxcrt4rnc1" path="res://scenes/blueprints/bush.tscn" id="1_s2v08"]
+[ext_resource type="Texture2D" uid="uid://c1r72wphfi5f6" path="res://sprites/tree_1.png" id="2_6jhel"]
+
+[node name="Obstacle2" instance=ExtResource("1_s2v08")]
+
+[node name="SpriteFront" parent="Area3D" index="1"]
+texture = ExtResource("2_6jhel")
+region_rect = Rect2(288, 215, 689, 999)
+
+[node name="SpriteFront2" parent="Area3D" index="2"]
+transform = Transform3D(-0.409491, 0, 8.74228e-09, 0, 0.382844, 0, -3.57988e-08, 0, -0.1, 0, 0.779254, -0.988458)
+
+[node name="SpriteFront3" parent="Area3D" index="3"]
+transform = Transform3D(0.409491, 0, -1.74846e-08, 0, 0.383716, 0, 7.15976e-08, 0, 0.1, 0, 0.779254, -0.988458)
+
+[node name="SpriteBack" parent="Area3D" index="4"]
+texture = ExtResource("2_6jhel")
+region_rect = Rect2(288, 215, 689, 999)

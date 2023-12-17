@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmln1imksaeu7"]
+[gd_scene load_steps=3 format=3 uid="uid://cojxw7r43kr7r"]
 
 [ext_resource type="VideoStream" path="res://assets/SplashScreen.ogv" id="1_4ddf5"]
 [ext_resource type="Script" path="res://scripts/VideoSceneSwitcher.cs" id="1_esnnl"]

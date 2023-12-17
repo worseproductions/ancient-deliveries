@@ -1,20 +1,34 @@
-[gd_scene load_steps=31 format=3 uid="uid://cs0nxa4i42137"]
+[gd_scene load_steps=47 format=3 uid="uid://cs0nxa4i42137"]
 
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
 [ext_resource type="PackedScene" uid="uid://dbj4gpkgga8t8" path="res://scenes/blueprints/player.tscn" id="1_yjpkm"]
-[ext_resource type="PackedScene" uid="uid://c8jg2fy85n1nq" path="res://scenes/blueprints/car.tscn" id="3_8aaa5"]
-[ext_resource type="PackedScene" uid="uid://bkqrcq2jg63gl" path="res://scenes/blueprints/truck.tscn" id="3_k5w8g"]
+[ext_resource type="PackedScene" uid="uid://dixpgbphlrnmt" path="res://scenes/blueprints/cars/car_blue.tscn" id="2_6cqmv"]
+[ext_resource type="PackedScene" uid="uid://dkc1ogycij5er" path="res://scenes/blueprints/cars/car_brown.tscn" id="3_723wi"]
 [ext_resource type="Script" path="res://scripts/Road.cs" id="3_rd2n0"]
 [ext_resource type="PackedScene" uid="uid://qwiucfpg8ar7" path="res://scenes/blueprints/cross_roads.tscn" id="4_ihku2"]
+[ext_resource type="PackedScene" uid="uid://dl31cypl8ftgd" path="res://scenes/blueprints/cars/car_green.tscn" id="4_yemtb"]
+[ext_resource type="PackedScene" uid="uid://bbkcbqxhtysqy" path="res://scenes/blueprints/cars/car_red.tscn" id="5_7yc0j"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="5_egjwb"]
 [ext_resource type="Texture2D" uid="uid://b3y3e4jfi40vm" path="res://sprites/road_section.png" id="5_trgkd"]
 [ext_resource type="Texture2D" uid="uid://1myu4mu1nnvw" path="res://addons/AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="6_heowg"]
+[ext_resource type="PackedScene" uid="uid://bf2a0ifok2kev" path="res://scenes/blueprints/cars/car_white.tscn" id="6_uwu4t"]
+[ext_resource type="PackedScene" uid="uid://qf3uhwi8qnfu" path="res://scenes/blueprints/cars/cybertruck.tscn" id="7_j3uu5"]
 [ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
 [ext_resource type="Script" path="res://scripts/Fader.cs" id="10_c5l3t"]
 [ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="10_hw3ju"]
+[ext_resource type="PackedScene" uid="uid://bwb6he73fo8ho" path="res://scenes/blueprints/tree.tscn" id="11_ypo6o"]
+[ext_resource type="PackedScene" uid="uid://kbj1u4iysfyq" path="res://scenes/blueprints/tree_2.tscn" id="12_huijp"]
 [ext_resource type="PackedScene" uid="uid://bfc40trkthvl8" path="res://scenes/selector-screen.tscn" id="13_yi3tu"]
 [ext_resource type="Script" path="res://scripts/SuikaGame.cs" id="15_a1lbr"]
+[ext_resource type="Texture2D" uid="uid://cgqdm57kyc1eo" path="res://sprites/game_over.png" id="16_d4cqm"]
+[ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="17_h8jry"]
+[ext_resource type="Texture2D" uid="uid://nhwa1f6w5pti" path="res://sprites/wrong_cutscene.png" id="20_enho2"]
+[ext_resource type="Texture2D" uid="uid://yxc4iu4scg4m" path="res://sprites/correct_cutscene.png" id="21_cc68t"]
+[ext_resource type="Texture2D" uid="uid://7xogx7u5lwjm" path="res://sprites/container.png" id="24_cx2rr"]
+[ext_resource type="PackedScene" uid="uid://bs2xxcrt4rnc1" path="res://scenes/blueprints/bush.tscn" id="25_7ultf"]
+[ext_resource type="PackedScene" uid="uid://bqkh1ovo17acs" path="res://scenes/blueprints/bush_2.tscn" id="26_8qgfb"]
+[ext_resource type="PackedScene" uid="uid://cr8n3714wx2fk" path="res://scenes/blueprints/bush_3.tscn" id="27_e3ffd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
 albedo_texture = ExtResource("5_trgkd")
@@ -36,8 +50,14 @@ background_mode = 2
 sky = SubResource("Sky_maxvm")
 ambient_light_source = 3
 ambient_light_color = Color(0, 0.45098, 1, 1)
+glow_bloom = 0.45
+glow_blend_mode = 3
 fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
 volumetric_fog_density = 0.0647
+adjustment_enabled = true
+adjustment_brightness = 0.91
+adjustment_contrast = 1.47
+adjustment_saturation = 1.2
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_3hrkw"]
 
@@ -70,27 +90,39 @@ font = ExtResource("1_5rb0j")
 font_size = 64
 font_color = Color(0.333333, 0.309804, 0.329412, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_yqome"]
-font = ExtResource("1_5rb0j")
-font_size = 64
-font_color = Color(1, 0.427451, 0.580392, 1)
-shadow_color = Color(1, 0, 1, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxsqb"]
 size = Vector2(128, 16)
 
+[sub_resource type="Gradient" id="Gradient_nrif1"]
+colors = PackedColorArray(0, 0.360784, 0, 1, 0.184314, 0.929412, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1d8ty"]
+noise_type = 3
+frequency = 0.6199
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mvaxf"]
+width = 4096
+height = 4096
+seamless = true
+color_ramp = SubResource("Gradient_nrif1")
+noise = SubResource("FastNoiseLite_1d8ty")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m654t"]
 albedo_color = Color(0, 0.341176, 0.0392157, 1)
+albedo_texture = SubResource("NoiseTexture2D_mvaxf")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_q7e3x"]
 material = SubResource("StandardMaterial3D_m654t")
 
-[node name="Test" type="Node3D" node_paths=PackedStringArray("_crossRoadsSpawnPoint")]
+[node name="Test" type="Node3D" node_paths=PackedStringArray("_bushPaths", "_crossRoadsSpawnPoint")]
 process_priority = -1
 transform = Transform3D(0.999999, -0.00146681, 0.000879762, 0.0014668, 0.999999, 7.0587e-06, -0.000879771, -5.74413e-06, 1, 0, 0, 0)
 script = ExtResource("1_q4brq")
 _spawnMultiplier = 0.5
-_obstacleScenes = Array[PackedScene]([ExtResource("3_8aaa5"), ExtResource("3_k5w8g")])
+_obstacleScenes = Array[PackedScene]([ExtResource("2_6cqmv"), ExtResource("3_723wi"), ExtResource("4_yemtb"), ExtResource("5_7yc0j"), ExtResource("6_uwu4t"), ExtResource("7_j3uu5")])
+_bushScenes = Array[PackedScene]([null, ExtResource("25_7ultf"), ExtResource("26_8qgfb"), ExtResource("27_e3ffd"), ExtResource("11_ypo6o"), ExtResource("12_huijp")])
+_bushPaths = [NodePath("Bushes/BushPathLeft"), NodePath("Bushes/BushPathLeft3"), NodePath("Bushes/BushPathLeft2"), NodePath("Bushes/BushPathRight"), NodePath("Bushes/BushPathRight2"), NodePath("Bushes/BushPathRight3")]
+_bushSpawnInterval = 0.1
 _crossRoadsScene = ExtResource("4_ihku2")
 _crossRoadsSpawnPoint = NodePath("CrossRoadsSpawnPoint")
 
@@ -199,6 +231,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("10_c5l3t")
+_fadeInDuration = 2.0
 
 [node name="ColorRect" type="ColorRect" parent="UiLayer/GameOverMenu"]
 layout_mode = 1
@@ -216,25 +249,134 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.5
-offset_top = -50.5
-offset_right = 40.5
-offset_bottom = 50.5
+offset_left = -536.0
+offset_top = -188.0
+offset_right = -456.0
+offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Y"
 label_settings = SubResource("LabelSettings_s75j3")
 
+[node name="Label2" type="Label" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -12.0
+offset_right = -280.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_s75j3")
+
+[node name="Label3" type="Label" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -536.0
+offset_top = 164.0
+offset_right = -456.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_s75j3")
+
+[node name="Label4" type="Label" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 296.0
+offset_top = -228.0
+offset_right = 376.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_s75j3")
+
+[node name="Label5" type="Label" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 488.0
+offset_top = 188.0
+offset_right = 568.0
+offset_bottom = 276.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_s75j3")
+
+[node name="Label6" type="Label" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 344.0
+offset_top = 28.0
+offset_right = 424.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Y"
+label_settings = SubResource("LabelSettings_s75j3")
+
+[node name="TextureRect" type="TextureRect" parent="UiLayer/GameOverMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_d4cqm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RestartButton" type="Button" parent="UiLayer/GameOverMenu"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -208.0
+offset_top = -112.0
+offset_right = -8.0
+offset_bottom = -9.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("17_h8jry")
+theme_override_font_sizes/font_size = 75
+text = "MA"
+
 [node name="PauseMenu" type="Control" parent="UiLayer"]
-process_mode = 2
+process_mode = 3
 visible = false
 layout_mode = 3
-anchor_right = 0.993
-anchor_bottom = 0.975
-offset_right = 8.06396
-offset_bottom = 8.20001
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("10_hw3ju")
-_fadeDuration = 0.1
 
 [node name="ColorRect" type="ColorRect" parent="UiLayer/PauseMenu"]
 layout_mode = 1
@@ -243,17 +385,70 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.160784, 0.160784, 0.160784, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UiLayer/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -158.5
+offset_right = 100.0
+offset_bottom = 158.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="UiLayer/PauseMenu/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("17_h8jry")
+theme_override_font_sizes/font_size = 75
+text = "Mc"
+
+[node name="RestartButton2" type="Button" parent="UiLayer/PauseMenu/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("17_h8jry")
+theme_override_font_sizes/font_size = 75
+text = "MA"
+
+[node name="QuitButton" type="Button" parent="UiLayer/PauseMenu/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("17_h8jry")
+theme_override_font_sizes/font_size = 75
+text = "My"
+
+[node name="Label" type="Label" parent="UiLayer/PauseMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 18.0
+offset_right = 150.0
+offset_bottom = 155.0
+grow_horizontal = 2
+theme = ExtResource("17_h8jry")
+theme_override_font_sizes/font_size = 100
+text = "Zwy"
 
 [node name="DecisionScreen" parent="UiLayer" instance=ExtResource("13_yi3tu")]
 process_mode = 2
 visible = false
 
 [node name="GameUI" type="Control" parent="UiLayer"]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 2
+script = ExtResource("10_c5l3t")
 
 [node name="TextureRect" type="TextureRect" parent="UiLayer/GameUI"]
 layout_mode = 0
@@ -277,7 +472,6 @@ texture = ExtResource("5_egjwb")
 expand_mode = 1
 flip_h = true
 script = ExtResource("10_c5l3t")
-_fadeDuration = 3.0
 _startVisible = true
 metadata/_edit_group_ = true
 
@@ -308,43 +502,132 @@ SDf
 "
 scroll_active = false
 
-[node name="HealthLabel" type="Label" parent="UiLayer/GameUI"]
+[node name="HealthLabel" type="RichTextLabel" parent="UiLayer/GameUI"]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 16.0
-offset_right = 248.0
-offset_bottom = 112.0
-text = "44444"
-label_settings = SubResource("LabelSettings_yqome")
+offset_right = 434.0
+offset_bottom = 87.0
+theme = ExtResource("17_h8jry")
+bbcode_enabled = true
+text = "[color=purple]4444[/color][color=white]4[/color]"
 
-[node name="SuikaGame" type="Node2D" parent="UiLayer/GameUI"]
+[node name="WrongOptionCutscene" type="Control" parent="UiLayer/GameUI"]
 unique_name_in_owner = true
-position = Vector2(1152, 648)
+process_mode = 3
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("10_c5l3t")
+_waitDuration = 2.0
+
+[node name="ColorRect" type="ColorRect" parent="UiLayer/GameUI/WrongOptionCutscene"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.156863, 0.156863, 0.156863, 1)
+
+[node name="TextureRect" type="TextureRect" parent="UiLayer/GameUI/WrongOptionCutscene"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_enho2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CorrectOptionCutscene" type="Control" parent="UiLayer/GameUI"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("10_c5l3t")
+_waitDuration = 2.0
+
+[node name="ColorRect" type="ColorRect" parent="UiLayer/GameUI/CorrectOptionCutscene"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.156863, 0.156863, 0.156863, 1)
+
+[node name="TextureRect" type="TextureRect" parent="UiLayer/GameUI/CorrectOptionCutscene"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_cc68t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Control" type="CanvasLayer" parent="UiLayer/GameUI"]
+
+[node name="Control" type="Control" parent="UiLayer/GameUI/Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -280.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="SuikaGame" type="Node2D" parent="UiLayer/GameUI/Control/Control"]
+unique_name_in_owner = true
+position = Vector2(136, 272)
 script = ExtResource("15_a1lbr")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="UiLayer/GameUI/SuikaGame"]
+[node name="StaticBody2D" type="StaticBody2D" parent="UiLayer/GameUI/Control/Control/SuikaGame"]
 
-[node name="BoxCollider" type="CollisionPolygon2D" parent="UiLayer/GameUI/SuikaGame/StaticBody2D"]
+[node name="BoxCollider" type="CollisionPolygon2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/StaticBody2D"]
 unique_name_in_owner = true
-polygon = PackedVector2Array(0, 0, -128, 0, -128, -264, -120, -264, -120, -8, -8, -8, -8, -264, 0, -264)
+polygon = PackedVector2Array(0, 0, -128, 0, -128, -264, -120, -264, -120, -24, -8, -24, -8, -264, 0, -264)
 
-[node name="Polygon2D" type="Polygon2D" parent="UiLayer/GameUI/SuikaGame/StaticBody2D"]
-polygon = PackedVector2Array(0, 0, -128, 0, -128, -264, -120, -264, -120, -8, -8, -8, -8, -264, 0, -264)
+[node name="Sprite2D2" type="Sprite2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/StaticBody2D"]
+z_index = -1
+position = Vector2(-48, -132)
+scale = Vector2(0.144244, 0.186281)
+texture = ExtResource("5_egjwb")
+region_enabled = true
+region_rect = Rect2(1, 1, 1442, 1589)
 
-[node name="PackageSpawnPoint" type="Marker2D" parent="UiLayer/GameUI/SuikaGame"]
+[node name="Sprite2D" type="Sprite2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/StaticBody2D"]
+position = Vector2(-64, -132)
+scale = Vector2(0.195122, 0.217105)
+texture = ExtResource("24_cx2rr")
+region_enabled = true
+region_rect = Rect2(341, 99, 656, 1216)
+
+[node name="PackageSpawnPoint" type="Marker2D" parent="UiLayer/GameUI/Control/Control/SuikaGame"]
 unique_name_in_owner = true
 position = Vector2(-64, -288)
 
-[node name="FullArea" type="Area2D" parent="UiLayer/GameUI/SuikaGame"]
+[node name="FullArea" type="Area2D" parent="UiLayer/GameUI/Control/Control/SuikaGame"]
 position = Vector2(0, 192)
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UiLayer/GameUI/SuikaGame/FullArea"]
-position = Vector2(-64, -440)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UiLayer/GameUI/Control/Control/SuikaGame/FullArea"]
+position = Vector2(-64, -408)
 shape = SubResource("RectangleShape2D_sxsqb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1197.69, -9.21823e-11, -1.07288e-06, 1.42879e-06, 0.903219, 9.31323e-10, -1.19209e-07, 1.36424e-12, 1201.79, 0, -0.002, 0)
+transform = Transform3D(1197.69, -9.21814e-11, -1.07288e-06, 1.54802e-06, 0.903219, 9.31323e-10, -1.19209e-07, 1.36424e-12, 1201.79, 1.2478e-13, -0.002, 0)
 mesh = SubResource("PlaneMesh_q7e3x")
 
 [node name="CrossRoadsTargetPoint" type="Marker3D" parent="."]
@@ -355,3 +638,29 @@ gizmo_extents = 1.71
 [node name="CrossRoadsSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, -1.11649e-09, -5.82077e-10, 1.11662e-09, 1, 1.36424e-12, -5.82077e-10, -3.18323e-12, 1, 9.99999, 0.278, -104)
 gizmo_extents = 1.71
+
+[node name="Bushes" type="Node3D" parent="."]
+
+[node name="BushPathLeft" type="Path3D" parent="Bushes"]
+transform = Transform3D(1, -7.67246e-10, -5.82077e-11, 7.67375e-10, 1, 0, -5.82077e-11, -9.09495e-13, 1, -9.30546, 0.0105392, 4.56043)
+curve = SubResource("Curve3D_gyapk")
+
+[node name="BushPathLeft3" type="Path3D" parent="Bushes"]
+transform = Transform3D(1, -1.00007e-09, -5.82077e-11, 1.00021e-09, 1, 0, -5.82077e-11, -1.81899e-12, 1, -29.284, 0.0398439, 4.54285)
+curve = SubResource("Curve3D_gyapk")
+
+[node name="BushPathLeft2" type="Path3D" parent="Bushes"]
+transform = Transform3D(1, -1.00007e-09, -5.82077e-11, 1.00021e-09, 1, 0, -5.82077e-11, -1.81899e-12, 1, -15.4142, 0.0194995, 4.55505)
+curve = SubResource("Curve3D_gyapk")
+
+[node name="BushPathRight" type="Path3D" parent="Bushes"]
+transform = Transform3D(1, -7.67246e-10, -5.82077e-11, 7.67375e-10, 1, 0, -5.82077e-11, -9.09495e-13, 1, 9.16952, -0.01656, 4.57668)
+curve = SubResource("Curve3D_gyapk")
+
+[node name="BushPathRight2" type="Path3D" parent="Bushes"]
+transform = Transform3D(1, -7.67246e-10, -5.82077e-11, 7.67375e-10, 1, 0, -5.82077e-11, -9.09495e-13, 1, 13.7311, -0.0232511, 4.5807)
+curve = SubResource("Curve3D_gyapk")
+
+[node name="BushPathRight3" type="Path3D" parent="Bushes"]
+transform = Transform3D(1, -1.00007e-09, -5.82077e-11, 1.00021e-09, 1, 0, -5.82077e-11, -1.81899e-12, 1, 34.4175, -0.053594, 4.5989)
+curve = SubResource("Curve3D_gyapk")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bs2xxcrt4rnc1"]
+
+[ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="1_mbvl5"]
+[ext_resource type="Texture2D" uid="uid://cnij4ugg7mi1" path="res://sprites/bush_1.png" id="2_ah6sq"]
+
+[node name="Obstacle2" instance=ExtResource("1_mbvl5")]
+_speed = 0.25
+EnableLights = false
+
+[node name="SpriteFront" parent="Area3D" index="1"]
+texture = ExtResource("2_ah6sq")
+region_rect = Rect2(202, 348, 953, 884)
+
+[node name="SpriteBack" parent="Area3D" index="4"]
+texture = ExtResource("2_ah6sq")
+region_rect = Rect2(202, 348, 953, 884)

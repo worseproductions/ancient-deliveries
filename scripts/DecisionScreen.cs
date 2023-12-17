@@ -11,10 +11,11 @@ public partial class DecisionScreen : Fader {
 
 	[Signal]
 	public delegate void ActionWrongEventHandler();
-	
+
 	[Export] private float _timerDuration = 5.0f;
 	private float _timer = 0.0f;
-	private ProgressBar _timerBar;
+	private TextureProgressBar _timerBar;
+	private bool _stopTimer = true;
 
 
 	public List<string> Jobs;
@@ -33,32 +34,39 @@ public partial class DecisionScreen : Fader {
 		_straightOption = GetNode<SelectableOption>("HFlowContainer/StraightOption");
 		_rightOption = GetNode<SelectableOption>("HFlowContainer/RightOption");
 		_leftOption.GrabFocus();
-		_timerBar = GetNode<ProgressBar>("%TimerBar");
+		_timerBar = GetNode<TextureProgressBar>("%TimerBar");
 		_timerBar.MaxValue = _timerDuration;
-		
+		_timer = 0.0f;
+		_timerBar.Value = _timer;
+
 		_leftOption.Selected += () => {
 			GD.Print($"Option selected: 0 / {_correctOptionIndex}");
 			EmitSignal(_correctOptionIndex == 0 ? SignalName.ActionCorrect : SignalName.ActionWrong);
+			_stopTimer = true;
 		};
-		
+
 		_straightOption.Selected += () => {
 			GD.Print($"Option selected: 1 / {_correctOptionIndex}");
 			EmitSignal(_correctOptionIndex == 1 ? SignalName.ActionCorrect : SignalName.ActionWrong);
+			_stopTimer = true;
 		};
-		
+
 		_rightOption.Selected += () => {
 			GD.Print($"Option selected: 2 / {_correctOptionIndex}");
 			EmitSignal(_correctOptionIndex == 2 ? SignalName.ActionCorrect : SignalName.ActionWrong);
+			_stopTimer = true;
 		};
 	}
 
 	public override void _Process(double delta) {
 		base._Process(delta);
+		if (_stopTimer) return;
 		_timer += (float)delta;
 		_timerBar.Value = _timer;
-		
+
 		if (!(_timer >= _timerDuration)) return;
 		_timer = 0.0f;
+		_stopTimer = true;
 		EmitSignal(SignalName.ActionWrong);
 	}
 
@@ -74,5 +82,10 @@ public partial class DecisionScreen : Fader {
 		_leftOption.SetText(_correctOptionIndex == 0 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)]);
 		_straightOption.SetText(_correctOptionIndex == 1 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)]);
 		_rightOption.SetText(_correctOptionIndex == 2 ? correctJob : otherJobs[new Random().Next(0, otherJobs.Length)]);
+		
+		
+		_timer = 0.0f;
+		_stopTimer = false;
+		_timerBar.Value = _timer;
 	}
 }

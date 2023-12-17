@@ -48,7 +48,6 @@ anchor_bottom = 1.0
 offset_top = 19.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_mode = 0
 theme = ExtResource("3_3fr7c")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 46

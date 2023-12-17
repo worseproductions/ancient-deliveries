@@ -8,7 +8,7 @@ namespace AncientDeliveries.scripts;
 public static class JobGenerator {
 	public static List<string> GetJobs(int jobSize, int addressLength) {
 		var random = new Random();
-		const string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456";
+		const string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456{|}~";
 		var jobs = new List<string>();
 		for (var jobIdx = 0; jobIdx < jobSize; jobIdx++) {
 			addressLength = Math.Clamp(addressLength, 1, 20);

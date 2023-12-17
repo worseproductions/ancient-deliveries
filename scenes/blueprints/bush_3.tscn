@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr8n3714wx2fk"]
+
+[ext_resource type="PackedScene" uid="uid://bs2xxcrt4rnc1" path="res://scenes/blueprints/bush.tscn" id="1_f3yy8"]
+[ext_resource type="Texture2D" uid="uid://bwjaev0vsn0nu" path="res://sprites/bush_3.png" id="2_ptyxr"]
+
+[node name="Bush" instance=ExtResource("1_f3yy8")]
+EnableLights = false
+
+[node name="SpriteFront" parent="Area3D" index="1"]
+texture = ExtResource("2_ptyxr")
+region_rect = Rect2(162, 312, 1062, 905)
+
+[node name="SpriteBack" parent="Area3D" index="4"]
+texture = ExtResource("2_ptyxr")
+region_rect = Rect2(162, 312, 1062, 905)

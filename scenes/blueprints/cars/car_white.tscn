@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf2a0ifok2kev"]
+
+[ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="1_l0y04"]
+[ext_resource type="Texture2D" uid="uid://1enujujqqdev" path="res://sprites/car_white.png" id="2_1nem0"]
+[ext_resource type="Texture2D" uid="uid://bl53vb3hb06x8" path="res://sprites/car_white_back.png" id="3_lyers"]
+
+[node name="Obstacle2" instance=ExtResource("1_l0y04")]
+
+[node name="SpriteFront" parent="Area3D" index="1"]
+texture = ExtResource("2_1nem0")
+
+[node name="SpriteBack" parent="Area3D" index="2"]
+texture = ExtResource("3_lyers")

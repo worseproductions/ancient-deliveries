@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://46qlm3geacag"]
+[gd_scene load_steps=6 format=3 uid="uid://46qlm3geacag"]
 
-[ext_resource type="Texture2D" uid="uid://dkua56w1a1fx1" path="res://sprites/car.png" id="1_2n6gd"]
 [ext_resource type="Script" path="res://scripts/Obstacle.cs" id="1_ldim2"]
+[ext_resource type="Texture2D" uid="uid://cfcrot2wlfty2" path="res://sprites/car_blue.png" id="2_rw2wp"]
+[ext_resource type="Texture2D" uid="uid://865wl4bvseuh" path="res://sprites/car_blue_back.png" id="3_3q6h2"]
+[ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="3_bt6xp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oj1q2"]
-size = Vector3(3, 1, 1)
+size = Vector3(4.06494, 2.92273, 1)
 
-[node name="Obstacle" type="PathFollow3D"]
+[node name="Obstacle2" type="PathFollow3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.227631, 1, -6.15233)
 progress = 7.0
 script = ExtResource("1_ldim2")
@@ -16,21 +18,45 @@ EnableLights = true
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.150445, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.036377, 0.81092, -0.950238)
 shape = SubResource("BoxShape3D_oj1q2")
 
-[node name="Sprite3D" type="Sprite3D" parent="Area3D"]
-transform = Transform3D(0.544267, 0, 0, 0, 0.31055, -0.0821239, 0, 0.446973, 0.0570584, 0, 0.779254, -0.988458)
-texture = ExtResource("1_2n6gd")
+[node name="SpriteFront" type="Sprite3D" parent="Area3D"]
+transform = Transform3D(-0.544267, 0, 8.74228e-09, 0, 0.544267, 0, -4.75813e-08, 0, -0.1, 0, 0.779254, -0.988458)
+sorting_offset = 1.0
+double_sided = false
+texture = ExtResource("2_rw2wp")
 region_enabled = true
-region_rect = Rect2(358.272, 253.627, 588.613, 748.108)
+region_rect = Rect2(225, 445, 816, 531)
+
+[node name="SpriteFront2" type="Sprite3D" parent="Area3D"]
+transform = Transform3D(-0.409491, 0, 8.74228e-09, 0, 0.230627, 0, -3.57988e-08, 0, -0.1, 0, 0.779254, -0.988458)
+double_sided = false
+texture = ExtResource("3_bt6xp")
+region_enabled = true
+region_rect = Rect2(1, 1, 1442, 1589)
+
+[node name="SpriteFront3" type="Sprite3D" parent="Area3D"]
+transform = Transform3D(0.409491, 0, -1.74846e-08, 0, 0.230627, 0, 7.15976e-08, 0, 0.1, 0, 0.779254, -0.988458)
+double_sided = false
+texture = ExtResource("3_bt6xp")
+region_enabled = true
+region_rect = Rect2(1, 1, 1442, 1589)
+
+[node name="SpriteBack" type="Sprite3D" parent="Area3D"]
+transform = Transform3D(0.544267, 0, 0, 0, 0.544267, 0, 0, 0, 0.1, 0, 0.779254, -0.988458)
+sorting_offset = 1.0
+double_sided = false
+texture = ExtResource("3_3q6h2")
+region_enabled = true
+region_rect = Rect2(225, 445, 816, 531)
 
 [node name="Lights" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258416, 0.126864, -2.47147)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05481, 0.0693724, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77963, 0.691314, 0)
 light_energy = 16.0
 light_size = 100.0
 shadow_enabled = true
@@ -38,9 +64,27 @@ spot_range = 4096.0
 spot_angle = 25.0
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05361, 0.0693724, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26872, 0.681962, 0)
 light_energy = 16.0
 light_size = 100.0
+shadow_enabled = true
+spot_range = 4096.0
+spot_angle = 25.0
+
+[node name="SpotLight3D3" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.49905, 0.144192, 2.60973)
+light_color = Color(1, 0, 0, 1)
+light_energy = 5.0
+light_size = 50.0
+shadow_enabled = true
+spot_range = 4096.0
+spot_angle = 25.0
+
+[node name="SpotLight3D4" type="SpotLight3D" parent="Lights"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.17052, 0.0834016, 2.60973)
+light_color = Color(1, 0, 0, 1)
+light_energy = 5.0
+light_size = 50.0
 shadow_enabled = true
 spot_range = 4096.0
 spot_angle = 25.0

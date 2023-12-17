@@ -21,4 +21,8 @@ public partial class SelectableOption : Control {
 	public void SetText(string text) {
 		_button.Text = text;
 	}
+
+	public void _GrabFocus() {
+		_button.GrabFocus();
+	}
 }

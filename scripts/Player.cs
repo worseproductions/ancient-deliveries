@@ -41,7 +41,6 @@ public partial class Player : CharacterBody3D {
 		GD.Print($"Health: {Health}");
 		if (Health > 0) return;
 		GD.Print("Game Over");
-		GetTree().Paused = true;
 		EmitSignal(SignalName.Died);
 	}
 
