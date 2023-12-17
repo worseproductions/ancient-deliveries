@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cpo7jmcgsayc7" path="res://sprites/TitleAncientDeliveries.png" id="1_2qbhe"]
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="1_bi8iq"]
 [ext_resource type="Script" path="res://scripts/MenuHandler.cs" id="1_de1fd"]
-[ext_resource type="PackedScene" uid="uid://cs0nxa4i42137" path="res://scenes/main.tscn" id="2_6p2hh"]
+[ext_resource type="PackedScene" uid="uid://cd2j7slpvtsm4" path="res://scenes/controls_screen.tscn" id="2_dsc7r"]
 [ext_resource type="AudioStream" uid="uid://fdhx7uoyygjh" path="res://audio/sfx_paper1.wav" id="3_kudjw"]
 [ext_resource type="PackedScene" uid="uid://bmg1otljbgldy" path="res://scenes/settings.tscn" id="3_ov3dv"]
 [ext_resource type="Texture2D" uid="uid://cbyfnk24f28d8" path="res://sprites/Oetzivorne_1.png" id="5_wx21f"]
@@ -25,7 +25,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_de1fd")
-StartScene = ExtResource("2_6p2hh")
+StartScene = ExtResource("2_dsc7r")
 ButtonSfx = ExtResource("3_kudjw")
 OptionsScene = ExtResource("3_ov3dv")
 

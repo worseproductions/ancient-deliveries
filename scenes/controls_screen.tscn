@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cd2j7slpvtsm4"]
+[gd_scene load_steps=11 format=3 uid="uid://cd2j7slpvtsm4"]
 
 [ext_resource type="Texture2D" uid="uid://d0bb53vhrjirc" path="res://sprites/road.png" id="1_mf7oi"]
 [ext_resource type="Script" path="res://scripts/ControlScreen.cs" id="1_mpjtd"]
 [ext_resource type="PackedScene" uid="uid://cs0nxa4i42137" path="res://scenes/main.tscn" id="2_f3w1e"]
 [ext_resource type="Texture2D" uid="uid://cee41hv10mukl" path="res://sprites/paper.png" id="2_tcqc6"]
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="4_acbkv"]
+[ext_resource type="Texture2D" uid="uid://cjt8e7btunuo7" path="res://sprites/Controls.png" id="6_1ljmo"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sjlxg"]
 texture = ExtResource("1_mf7oi")
@@ -69,3 +70,17 @@ theme = ExtResource("4_acbkv")
 theme_override_font_sizes/font_size = 64
 shortcut = SubResource("Shortcut_1p8o8")
 text = "Mc"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 177.0
+offset_top = 129.0
+offset_right = -323.0
+offset_bottom = -152.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_1ljmo")
+expand_mode = 2
