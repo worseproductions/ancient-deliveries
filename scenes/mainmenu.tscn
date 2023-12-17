@@ -1,13 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://c26yavb4lvs3h"]
+[gd_scene load_steps=14 format=3 uid="uid://c26yavb4lvs3h"]
 
 [ext_resource type="Texture2D" uid="uid://cpo7jmcgsayc7" path="res://sprites/TitleAncientDeliveries.png" id="1_2qbhe"]
 [ext_resource type="Theme" uid="uid://d3s5oto438qbc" path="res://themes/default.tres" id="1_bi8iq"]
 [ext_resource type="Script" path="res://scripts/MenuHandler.cs" id="1_de1fd"]
-[ext_resource type="PackedScene" uid="uid://cd2j7slpvtsm4" path="res://scenes/controls_screen.tscn" id="2_dsc7r"]
+[ext_resource type="PackedScene" uid="uid://cs0nxa4i42137" path="res://scenes/main.tscn" id="2_6p2hh"]
+[ext_resource type="AudioStream" uid="uid://fdhx7uoyygjh" path="res://audio/sfx_paper1.wav" id="3_kudjw"]
 [ext_resource type="PackedScene" uid="uid://bmg1otljbgldy" path="res://scenes/settings.tscn" id="3_ov3dv"]
 [ext_resource type="Texture2D" uid="uid://cbyfnk24f28d8" path="res://sprites/Oetzivorne_1.png" id="5_wx21f"]
 [ext_resource type="Texture2D" uid="uid://b7u7v34kpodf7" path="res://sprites/WorseLogoBanner.png" id="6_gv7bt"]
 [ext_resource type="Script" path="res://scripts/LinkCaller.cs" id="7_hdlqg"]
+[ext_resource type="AudioStream" uid="uid://62wobjyktywq" path="res://audio/music_menu.mp3" id="8_ra82e"]
 [ext_resource type="Texture2D" uid="uid://d1tpf0ia6dtcj" path="res://sprites/menu_bg.png" id="9_3mjwl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k0lqi"]
@@ -23,7 +25,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_de1fd")
-StartScene = ExtResource("2_dsc7r")
+StartScene = ExtResource("2_6p2hh")
+ButtonSfx = ExtResource("3_kudjw")
 OptionsScene = ExtResource("3_ov3dv")
 
 [node name="bg" type="TextureRect" parent="."]
@@ -146,3 +149,8 @@ offset_right = 411.0
 offset_bottom = 96.0
 texture = ExtResource("6_gv7bt")
 expand_mode = 1
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ra82e")
+autoplay = true
+bus = &"Music"

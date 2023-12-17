@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -11,10 +12,13 @@ public partial class Obstacle : PathFollow3D {
 	
 	private Area3D _area;
 	private Node3D _lights;
+	private AudioStreamPlayer3D _audioStreamPlayer3D;
 	
 	public override void _Ready() {
 		_lights = GetNode<Node3D>("%Lights");
 		_area = GetNode<Area3D>("Area3D");
+		_audioStreamPlayer3D = GetNode<AudioStreamPlayer3D>("sfx");
+		_audioStreamPlayer3D.PitchScale = (float)GD.RandRange(0.90f, 1.1f);
 		_area.BodyEntered += OnBodyEntered;
 	}
 

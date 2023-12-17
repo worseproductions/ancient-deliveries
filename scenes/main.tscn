@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cs0nxa4i42137"]
+[gd_scene load_steps=33 format=3 uid="uid://cs0nxa4i42137"]
 
 [ext_resource type="FontFile" uid="uid://ch8bi2c7trnjc" path="res://sprites/glyphs.png" id="1_5rb0j"]
 [ext_resource type="Script" path="res://scripts/Game.cs" id="1_q4brq"]
@@ -11,10 +11,12 @@
 [ext_resource type="Texture2D" uid="uid://b3y3e4jfi40vm" path="res://sprites/road_section.png" id="5_trgkd"]
 [ext_resource type="Texture2D" uid="uid://1myu4mu1nnvw" path="res://addons/AllSkyFree/Skyboxes/AllSkyFree_Sky_EpicGloriousPink_Equirect.png" id="6_heowg"]
 [ext_resource type="PackedScene" uid="uid://46qlm3geacag" path="res://scenes/blueprints/obstacle.tscn" id="8_twcpv"]
+[ext_resource type="AudioStream" uid="uid://dn33k03wndtlr" path="res://audio/hurt_sound.mp3" id="9_ai5bv"]
 [ext_resource type="Script" path="res://scripts/Fader.cs" id="10_c5l3t"]
 [ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="10_hw3ju"]
 [ext_resource type="PackedScene" uid="uid://bfc40trkthvl8" path="res://scenes/selector-screen.tscn" id="13_yi3tu"]
 [ext_resource type="Script" path="res://scripts/SuikaGame.cs" id="15_a1lbr"]
+[ext_resource type="AudioStream" uid="uid://b62j87s2vnaqu" path="res://audio/music_main.mp3" id="16_n6jkh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3mcs"]
 albedo_texture = ExtResource("5_trgkd")
@@ -102,7 +104,7 @@ script = ExtResource("3_rd2n0")
 
 [node name="Road2" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, -4.18003e-10, -2.32831e-10, 4.18128e-10, 1, 4.54747e-13, -2.32831e-10, -9.09495e-13, 1, 20, 0.102533, -48.9991)
+transform = Transform3D(1, -5.34418e-10, -2.32831e-10, 5.34545e-10, 1, 4.54747e-13, -2.32831e-10, -9.09495e-13, 1, 20, 0.102533, -48.9991)
 mesh = SubResource("PlaneMesh_rk3en")
 script = ExtResource("3_rd2n0")
 
@@ -124,10 +126,15 @@ current = true
 fov = 58.0
 size = 0.05
 
-[node name="Player" parent="." instance=ExtResource("1_yjpkm")]
+[node name="Player" parent="." node_paths=PackedStringArray("_audioStreamPlayer") instance=ExtResource("1_yjpkm")]
 unique_name_in_owner = true
 transform = Transform3D(1, -7.67245e-10, 0, 7.67375e-10, 1, 0, 0, -9.09495e-13, 1, 0.000879771, 5.76825e-06, -0.999999)
 _speed = 10.0
+_audioStreamPlayer = NodePath("player_sfx")
+
+[node name="player_sfx" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("9_ai5bv")
+bus = &"SFX"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.40268, 0, 0)
@@ -355,3 +362,8 @@ gizmo_extents = 1.71
 [node name="CrossRoadsSpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, -1.11649e-09, -5.82077e-10, 1.11662e-09, 1, 1.36424e-12, -5.82077e-10, -3.18323e-12, 1, 9.99999, 0.278, -104)
 gizmo_extents = 1.71
+
+[node name="music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_n6jkh")
+autoplay = true
+bus = &"Music"
